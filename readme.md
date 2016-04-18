@@ -12,6 +12,8 @@ Leiningen-based ClojureScript project.
 
 ## The demo time!
 
+### Installation
+
 Launch latest [Chrome Canary](https://www.google.com/chrome/browser/canary.html) from command-line.
 I will want you to install [Dirac Chrome Extension](https://chrome.google.com/webstore/detail/dirac-devtools/kbkdngfljkchidcjpnfcgcokkbhlkogi) there,
 so I recommend to run it with a dedicated user profile.
@@ -81,40 +83,67 @@ current namespace. REPL is ready for your input at this point. You can try:
     js/window
     (doc filter)
     (filter odd? (range 42))
-    (in-ns)
-    (in-ns 'my.ns)
 
 If you see something very similar to the first screenshot at the top, you have Dirac running properly.
 
 **Congratulations!**
 
----
+### Hello, World!
 
-TODO: outdated - review this!
+Let's try to call `hello!` function from our namespace `dirac-sample.core`.
+
+    (dirac-sample.core/hello! "World")
+
+It worked `"Hello, World!"` was logged into the console (white background means that the logging was produced by javascript).
+But we got a warning: `Use of undeclared Var dirac-sample.core/hello! at line 1 &lt;dirac repl&gt;`.
+This is expected, because REPL environment has no idea that such function exits. It just blindly transpiled our command into javascript.
+
+As you probably know, you have to first eval namespace in the REPL context to make it aware of namespace content.
+
+    (require 'dirac-sample.core)
+
+Now you can call `(dirac-sample.core/hello! "World!")` (tip: use arrow up key to find it in console history) and it works without warnings.
+
+But still you have to type fully qualified name because currently you are in `cljs.user` namespace. To switch you can use `in-ns` special function.
+
+Let's try it:
+
+    (in-ns)
+
+You get an error `java.lang.IllegalArgumentException: Argument to in-ns must be a symbol.`. This is a Java exception from REPL side.
+ Execute `(doc in-ns)` to see the documentation for this special REPL function. It expects namespace name as the first argument.
+
+    (in-ns 'dirac-sample.core)
+    (hello! "Dirac")
+
+Should log `Hello, Dirac!` into the console.
+
+### Breakpoints
 
 You can also test evaluation of ClojureScript in the context of selected stack frame when paused on a breakpoint:
 
-1. set breakpoint to line 40 of `more.cljs` (on Mac, you can use use CMD+P to quickly open a file at source panel)
-2. click the "breakpoint test" button on the page
-3. debugger should pause on the line (similar to the second screenshot at the top)
+1. click the "demo a breakpoint" button on the page
+2. debugger should pause on the `(js-debugger)` line in the breakpoint-demo function
 
-You could notice that custom formatters are presented everywhere including inlined values in the source code.
+Custom formatters should be presented as inlined values in the source code.
 Also property names in the scope panel are sorted and displayed in a more friendly way.
 
 Now hit ESC to bring up console drawer. Make sure you are switched to Dirac REPL and then enter:
 
     js/rng
 
-You should see actual value of `rng` variable from local scope (formatted by custom formatters from cljs-devtools).
-Same way as you would expect when evaluating a Javascript command. Actually you can try it.
+You should see actual value `(0 1 2)` of the `rng` variable from local scope (formatted by custom formatters from cljs-devtools).
+Same way as you would expect when evaluating a Javascript command in breakpoint context. Actually you can try it.
 Hit "Page Up" to switch to Javascript console prompt and enter:
 
     rng
 
-This should return the same value.
+This should return the same output.
 
 And now return back to Dirac REPL by pressing "Page Up" again and enter:
 
-    (take 3 js/rng)
+    (str (map inc js/rng))
+
+You should get back a string `"(1 2 3)"`.
 
 This is a proof that Dirac REPL can execute arbitrary ClojureScript code in the context of selected stack frame.
