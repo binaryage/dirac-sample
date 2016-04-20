@@ -5,7 +5,7 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript "1.8.40"]
                  [binaryage/devtools "0.6.1"]
-                 [binaryage/dirac "0.1.4"]]
+                 [binaryage/dirac "0.2.0"]]
 
   :plugins [[lein-cljsbuild "1.1.3"]
             [lein-shell "0.5.0"]
