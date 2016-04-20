@@ -10,7 +10,7 @@ Leiningen-based ClojureScript project.
     git clone https://github.com/binaryage/dirac-sample.git
     cd dirac-sample
 
-## The demo time!
+## Demo time!
 
 ### Installation
 
@@ -90,19 +90,19 @@ If you see something very similar to the first screenshot at the top, you have D
 
 ### Hello, World!
 
-Let's try to call `hello!` function from our namespace `dirac-sample.core`.
+Let's try to call `hello!` function from our namespace `dirac-sample.demo`.
 
-    (dirac-sample.core/hello! "World")
+    (dirac-sample.demo/hello! "World")
 
 It worked `"Hello, World!"` was logged into the console (white background means that the logging was produced by javascript).
-But we got a warning: `Use of undeclared Var dirac-sample.core/hello! at line 1 &lt;dirac repl&gt;`.
+But we got a warning: `Use of undeclared Var dirac-sample.demo/hello! at line 1 &lt;dirac repl&gt;`.
 This is expected, because REPL environment has no idea that such function exits. It just blindly transpiled our command into javascript.
 
 As you probably know, you have to first eval namespace in the REPL context to make it aware of namespace content.
 
-    (require 'dirac-sample.core)
+    (require 'dirac-sample.demo)
 
-Now you can call `(dirac-sample.core/hello! "World!")` (tip: use arrow up key to find it in console history) and it works without warnings.
+Now you can call `(dirac-sample.demo/hello! "World!")` (tip: use arrow up key to find it in console history) and it works without warnings.
 
 But still you have to type fully qualified name because currently you are in `cljs.user` namespace. To switch you can use `in-ns` special function.
 
@@ -113,7 +113,7 @@ Let's try it:
 You get an error `java.lang.IllegalArgumentException: Argument to in-ns must be a symbol.`. This is a Java exception from REPL side.
  Execute `(doc in-ns)` to see the documentation for this special REPL function. It expects namespace name as the first argument.
 
-    (in-ns 'dirac-sample.core)
+    (in-ns 'dirac-sample.demo)
     (hello! "Dirac")
 
 Should log `Hello, Dirac!` into the console.
