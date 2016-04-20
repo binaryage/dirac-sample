@@ -8,11 +8,14 @@
                  [binaryage/dirac "0.1.4"]]
 
   :plugins [[lein-cljsbuild "1.1.3"]
-            [lein-shell "0.5.0"]]
+            [lein-shell "0.5.0"]
+            [lein-cooper "1.2.2"]]
 
   ; =========================================================================================================================
 
-  :source-paths ["src/demo"]
+  :source-paths ["src/shared"
+                 "src/demo"
+                 "src/tests"]
 
   :clean-targets ^{:protect false} ["resources/public/_compiled"
                                     "target"]
@@ -28,10 +31,33 @@
   :profiles {; --------------------------------------------------------------------------------------------------------------
              :demo
              {:cljsbuild {:builds {:demo
-                                   {:source-paths ["src/demo"]
-                                    :compiler     {:output-to     "resources/public/_compiled/demo/dirac_sample.js"
+                                   {:source-paths ["src/shared"
+                                                   "src/demo"]
+                                    :compiler     {:output-to     "resources/public/_compiled/demo/demo.js"
                                                    :output-dir    "resources/public/_compiled/demo"
                                                    :asset-path    "_compiled/demo"
+                                                   :optimizations :none
+                                                   :source-map    true}}}}}
+
+             ; --------------------------------------------------------------------------------------------------------------
+             :demo-advanced
+             {:cljsbuild {:builds {:demo-advanced
+                                   {:source-paths ["src/shared"
+                                                   "src/demo"]
+                                    :compiler     {:output-to     "resources/public/_compiled/demo_advanced/dirac_sample.js"
+                                                   :output-dir    "resources/public/_compiled/demo_advanced"
+                                                   :asset-path    "_compiled/demo_advanced"
+                                                   :pseudo-names  true
+                                                   :optimizations :advanced}}}}}
+
+             ; --------------------------------------------------------------------------------------------------------------
+             :tests
+             {:cljsbuild {:builds {:tests
+                                   {:source-paths ["src/shared"
+                                                   "src/tests"]
+                                    :compiler     {:output-to     "resources/public/_compiled/tests/tests.js"
+                                                   :output-dir    "resources/public/_compiled/tests"
+                                                   :asset-path    "_compiled/tests"
                                                    :optimizations :none
                                                    :source-map    true}}}}}
 
@@ -44,16 +70,6 @@
                                                  (dirac.agent/boot!))}}
 
              ; --------------------------------------------------------------------------------------------------------------
-             :demo-advanced
-             {:cljsbuild {:builds {:demo-advanced
-                                   {:source-paths ["src/demo"]
-                                    :compiler     {:output-to     "resources/public/_compiled/demo_advanced/dirac_sample.js"
-                                                   :output-dir    "resources/public/_compiled/demo_advanced"
-                                                   :asset-path    "_compiled/demo_advanced"
-                                                   :pseudo-names  true
-                                                   :optimizations :advanced}}}}}
-
-             ; --------------------------------------------------------------------------------------------------------------
              :checkouts
              {:checkout-deps-shares ^:replace [:source-paths
                                                :test-paths
@@ -63,18 +79,25 @@
               :cljsbuild            {:builds
                                      {:demo
                                       {:source-paths ["checkouts/cljs-devtools/src"
-                                                      "checkouts/dirac/src/runtime"]
-                                       :compiler     {}}}}}}
+                                                      "checkouts/dirac/src/runtime"]}}
+                                     :tests
+                                     {:source-paths ["checkouts/cljs-devtools/src"
+                                                     "checkouts/dirac/src/runtime"]}}}
+
+             ; --------------------------------------------------------------------------------------------------------------
+             :cooper-config
+             {:cooper {"demo"       ["lein" "auto-compile-demo"]
+                       "tests"      ["lein" "auto-compile-tests"]
+                       "dev-server" ["scripts/dev-server.sh"]}}}
 
   ; =========================================================================================================================
 
-  :aliases {"demo"          ["with-profile" "+demo"
-                             "do"
-                             "cljsbuild" "once,"
-                             "shell" "scripts/dev-server.sh"]
-            "dev"           ["with-profile" "+demo,+checkouts"
-                             "cljsbuild" "auto"]
-            "demo-advanced" ["with-profile" "+demo-advanced"
-                             "do"
-                             "cljsbuild" "once,"
-                             "shell" "scripts/dev-server.sh"]})
+  :aliases {"demo"               ["with-profile" "+demo" "do"
+                                  "cljsbuild" "once,"
+                                  "shell" "scripts/dev-server.sh"]
+            "auto-compile-demo"  ["with-profile" "+demo,+checkouts" "cljsbuild" "auto"]
+            "auto-compile-tests" ["with-profile" "+tests,+checkouts" "cljsbuild" "auto"]
+            "dev"                ["with-profile" "+cooper-config" "cooper"]
+            "demo-advanced"      ["with-profile" "+demo-advanced" "do"
+                                  "cljsbuild" "once,"
+                                  "shell" "scripts/dev-server.sh"]})

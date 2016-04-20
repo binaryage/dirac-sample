@@ -1,4 +1,4 @@
-(ns dirac-sample.core
+(ns dirac-sample.demo
   (:require-macros [dirac-sample.logging :refer [log]])
   (:require [dirac.runtime :as dirac]
             [devtools.core :as devtools]))
