@@ -16,8 +16,8 @@
 ; -- breakpoint demo --------------------------------------------------------------------------------------------------------
 
 (defn breakpoint-demo [count]
-  (let [rng (range count)]
-    (doseq [item rng]
+  (let [items (range count)]
+    (doseq [item items]
       (let [s (str "item=" item)]
         (js-debugger)
         (log s)))))

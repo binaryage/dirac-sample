@@ -130,19 +130,19 @@ Also property names in the scope panel are sorted and displayed in a more friend
 
 Now hit ESC to bring up console drawer. Make sure you are switched to Dirac REPL and then enter:
 
-    js/rng
+    js/items
 
-You should see actual value `(0 1 2)` of the `rng` variable from local scope (formatted by custom formatters from cljs-devtools).
+You should see actual value `(0 1 2)` of the `items` variable from local scope (formatted by custom formatters from cljs-devtools).
 Same way as you would expect when evaluating a Javascript command in breakpoint context. Actually you can try it.
 Hit "Page Up" to switch to Javascript console prompt and enter:
 
-    rng
+    items
 
 This should return the same output.
 
 And now return back to Dirac REPL by pressing "Page Up" again and enter:
 
-    (str (map inc js/rng))
+    (str (map inc js/items))
 
 You should get back a string `"(1 2 3)"`.
 
