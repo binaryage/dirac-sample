@@ -5,7 +5,7 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript "1.8.40"]
                  [binaryage/devtools "0.6.1"]
-                 [binaryage/dirac "0.2.0"]]
+                 [binaryage/dirac "0.3.0"]]
 
   :plugins [[lein-cljsbuild "1.1.3"]
             [lein-shell "0.5.0"]
@@ -64,7 +64,7 @@
              ; --------------------------------------------------------------------------------------------------------------
              :repl
              {:repl-options {:port             8230
-                             :nrepl-middleware [dirac.nrepl.middleware/dirac-repl]
+                             :nrepl-middleware [dirac.nrepl/middleware]
                              :init             (do
                                                  (require 'dirac.agent)
                                                  (dirac.agent/boot!))}}
