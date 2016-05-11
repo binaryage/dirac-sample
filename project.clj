@@ -3,7 +3,7 @@
   :url "https://github.com/binaryage/dirac-sample"
 
   :dependencies [[org.clojure/clojure "1.8.0"]
-                 [org.clojure/clojurescript "1.8.40"]
+                 [org.clojure/clojurescript "1.8.51"]
                  [binaryage/devtools "0.6.1"]
                  [binaryage/dirac "0.3.0"]]
 
