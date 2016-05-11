@@ -29,6 +29,15 @@
   :cljsbuild {:builds {}}                                                                                                     ; prevent https://github.com/emezeske/lein-cljsbuild/issues/413
 
   :profiles {; --------------------------------------------------------------------------------------------------------------
+             :clojure17
+             {:dependencies ^:replace [[org.clojure/clojure "1.7.0"]
+                                       [org.clojure/tools.nrepl "0.2.12"]                                                     ; for some reason this is needed for Clojure 1.7
+                                       [clojure-complete "0.2.4" :exclusions [org.clojure/clojure]]                           ; for some reason this is needed for Clojure 1.7
+                                       [org.clojure/clojurescript "1.8.51"]
+                                       [binaryage/devtools "0.6.1"]
+                                       [binaryage/dirac "0.3.0"]]}
+
+             ; --------------------------------------------------------------------------------------------------------------
              :demo
              {:cljsbuild {:builds {:demo
                                    {:source-paths ["src/shared"
@@ -95,6 +104,10 @@
   :aliases {"demo"               ["with-profile" "+demo" "do"
                                   "cljsbuild" "once,"
                                   "shell" "scripts/dev-server.sh"]
+            "demo17"             ["with-profile" "+demo,+clojure17" "do"
+                                  "cljsbuild" "once,"
+                                  "shell" "scripts/dev-server.sh"]
+            "repl17"             ["with-profile" "+base,+repl,+clojure17,+checkouts" "repl"]
             "auto-compile-demo"  ["with-profile" "+demo,+checkouts" "cljsbuild" "auto"]
             "auto-compile-tests" ["with-profile" "+tests,+checkouts" "cljsbuild" "auto"]
             "dev"                ["with-profile" "+cooper-config" "cooper"]
