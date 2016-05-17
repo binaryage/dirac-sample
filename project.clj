@@ -5,11 +5,13 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript "1.8.51"]
                  [binaryage/devtools "0.6.1"]
-                 [binaryage/dirac "0.3.0"]]
+                 [binaryage/dirac "0.4.0"]
+                 [figwheel "0.5.3-1"]]
 
   :plugins [[lein-cljsbuild "1.1.3"]
             [lein-shell "0.5.0"]
-            [lein-cooper "1.2.2"]]
+            [lein-cooper "1.2.2"]
+            [lein-figwheel "0.5.3-1"]]
 
   ; =========================================================================================================================
 
@@ -35,18 +37,19 @@
                                        [clojure-complete "0.2.4" :exclusions [org.clojure/clojure]]                           ; for some reason this is needed for Clojure 1.7
                                        [org.clojure/clojurescript "1.8.51"]
                                        [binaryage/devtools "0.6.1"]
-                                       [binaryage/dirac "0.3.0"]]}
+                                       [binaryage/dirac "0.4.0"]]}
 
              ; --------------------------------------------------------------------------------------------------------------
              :demo
              {:cljsbuild {:builds {:demo
                                    {:source-paths ["src/shared"
                                                    "src/demo"]
-                                    :compiler     {:output-to     "resources/public/_compiled/demo/demo.js"
-                                                   :output-dir    "resources/public/_compiled/demo"
-                                                   :asset-path    "_compiled/demo"
-                                                   :optimizations :none
-                                                   :source-map    true}}}}}
+                                    :compiler     {:output-to            "resources/public/_compiled/demo/demo.js"
+                                                   :output-dir           "resources/public/_compiled/demo"
+                                                   :asset-path           "_compiled/demo"
+                                                   :optimizations        :none
+                                                   :source-map           true
+                                                   :source-map-timestamp true}}}}}
 
              ; --------------------------------------------------------------------------------------------------------------
              :demo-advanced
@@ -64,11 +67,12 @@
              {:cljsbuild {:builds {:tests
                                    {:source-paths ["src/shared"
                                                    "src/tests"]
-                                    :compiler     {:output-to     "resources/public/_compiled/tests/tests.js"
-                                                   :output-dir    "resources/public/_compiled/tests"
-                                                   :asset-path    "_compiled/tests"
-                                                   :optimizations :none
-                                                   :source-map    true}}}}}
+                                    :compiler     {:output-to            "resources/public/_compiled/tests/tests.js"
+                                                   :output-dir           "resources/public/_compiled/tests"
+                                                   :asset-path           "_compiled/tests"
+                                                   :optimizations        :none
+                                                   :source-map           true
+                                                   :source-map-timestamp true}}}}}
 
              ; --------------------------------------------------------------------------------------------------------------
              :repl
@@ -77,6 +81,14 @@
                              :init             (do
                                                  (require 'dirac.agent)
                                                  (dirac.agent/boot!))}}
+
+             ; --------------------------------------------------------------------------------------------------------------
+             :figwheel
+             {:figwheel  {:server-port 7111
+                          :repl        false}
+              :cljsbuild {:builds
+                          {:demo
+                           {:figwheel true}}}}
 
              ; --------------------------------------------------------------------------------------------------------------
              :checkouts
@@ -88,15 +100,14 @@
               :cljsbuild            {:builds
                                      {:demo
                                       {:source-paths ["checkouts/cljs-devtools/src"
-                                                      "checkouts/dirac/src/runtime"]}}
-                                     :tests
-                                     {:source-paths ["checkouts/cljs-devtools/src"
-                                                     "checkouts/dirac/src/runtime"]}}}
+                                                      "checkouts/dirac/src/runtime"]}
+                                      :tests
+                                      {:source-paths ["checkouts/cljs-devtools/src"
+                                                      "checkouts/dirac/src/runtime"]}}}}
 
              ; --------------------------------------------------------------------------------------------------------------
              :cooper-config
-             {:cooper {"demo"       ["lein" "auto-compile-demo"]
-                       "tests"      ["lein" "auto-compile-tests"]
+             {:cooper {"figwheel"   ["lein" "dev-figwheel"]
                        "dev-server" ["scripts/dev-server.sh"]}}}
 
   ; =========================================================================================================================
@@ -108,8 +119,9 @@
                                   "cljsbuild" "once,"
                                   "shell" "scripts/dev-server.sh"]
             "repl17"             ["with-profile" "+base,+repl,+clojure17,+checkouts" "repl"]
-            "auto-compile-demo"  ["with-profile" "+demo,+checkouts" "cljsbuild" "auto"]
+            "dev-figwheel"       ["with-profile" "+demo,+tests,+checkouts,+figwheel" "figwheel" "demo" "tests"]
             "auto-compile-tests" ["with-profile" "+tests,+checkouts" "cljsbuild" "auto"]
+            "auto-compile-demo"  ["with-profile" "+demo,+checkouts" "cljsbuild" "auto"]
             "dev"                ["with-profile" "+cooper-config" "cooper"]
             "demo-advanced"      ["with-profile" "+demo-advanced" "do"
                                   "cljsbuild" "once,"

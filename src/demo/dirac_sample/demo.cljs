@@ -5,22 +5,24 @@
 
 ; -- installation -----------------------------------------------------------------------------------------------------------
 
+(enable-console-print!)
 (devtools/install!)
 (dirac/install!)
 
 ; -- hello demo -------------------------------------------------------------------------------------------------------------
 
-(defn hello! [s]
-  (log (str "Hello, " s "!")))
+(defn hello! [greetings]
+  (log (str "Hello, " (or greetings "there") "!")))
 
 ; -- breakpoint demo --------------------------------------------------------------------------------------------------------
 
 (defn breakpoint-demo [count]
-  (let [items (range count)]
-    (doseq [item items]
-      (let [s (str "item=" item)]
+  (let [numbers (range count)]
+    (doseq [number numbers]
+      (let [is-odd? (odd? number)
+            line (str "number " number " is " (if is-odd? "odd" "even"))]
         (js-debugger)
-        (log s)))))
+        (println line)))))
 
 (defn ^:export breakpoint-demo-handler []
   (log "calling breakpoint-demo:")
