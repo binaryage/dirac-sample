@@ -6,12 +6,12 @@
                  [org.clojure/clojurescript "1.8.51"]
                  [binaryage/devtools "0.6.1"]
                  [binaryage/dirac "0.4.0"]
-                 [figwheel "0.5.3-1"]]
+                 [figwheel "0.5.3-2"]]
 
   :plugins [[lein-cljsbuild "1.1.3"]
             [lein-shell "0.5.0"]
             [lein-cooper "1.2.2"]
-            [lein-figwheel "0.5.3-1"]]
+            [lein-figwheel "0.5.3-2"]]
 
   ; =========================================================================================================================
 
