@@ -3,7 +3,7 @@
 This project is an example of integration of [**Dirac DevTools**](https://github.com/binaryage/dirac) into a
 Leiningen-based ClojureScript project.
 
-![](https://dl.dropboxusercontent.com/u/559047/dirac-repl-01.png)
+![](https://dl.dropboxusercontent.com/u/559047/dirac-main-01.png)
 
 ## Local setup
 
@@ -38,8 +38,8 @@ It should open you a new window with Dirac DevTools app.
 It will look almost the same as internal DevTools, but you can tell the difference at first glance: active tab highlight
 will be green instead of blue (see the screenshots above).
 
-Ok, now you can switch to Javascript Console in Dirac DevTools. Focus prompt field and press `PageUp` or `PageDown`.
-This will switch prompt from Javascript to ClojureScript REPL.
+Ok, now you can switch to Javascript Console in Dirac DevTools. Focus prompt field and press `CTRL+,` or `CTRL+.`.
+This will cycle between Javascript to ClojureScript REPL prompts.
 
 You should see a red message on a green background: `Dirac Agent is not listening at ws://localhost:8231 (need help?).`
 
@@ -63,15 +63,14 @@ The terminal should print something similar to this:
      Results: Stored in vars *1, *2, *3, an exception in *e
 
     user=>
-    Dirac Agent v0.2.0
+    Dirac Agent v0.5.0
     Connected to nREPL server at nrepl://localhost:8230.
-    Tunnel is accepting connections at ws://localhost:8231.
+    Agent is accepting connections at ws://localhost:8231.
 
 Last three lines ensure you that Dirac Agent was launched alongside your nREPL server. It connected to it and is accepting
 DevTools connections on the websocket port 8231.
 
-After your Dirac Agent is up your Dirac DevTools should eventually reconnect. If you don't want to wait for the countdown,
-you may close Dirac window and open it again.
+After your Dirac Agent is up your Dirac DevTools should eventually reconnect.
 
 Connected? The red message should go away and you should see `cljs.user` indicating your
 current namespace. REPL is ready for your input at this point. You can try:
@@ -92,14 +91,10 @@ Let's try to call `hello!` function from our namespace `dirac-sample.demo`.
     (dirac-sample.demo/hello! "World")
 
 It worked `"Hello, World!"` was logged into the console (white background means that the logging output originated in Javascript land).
-But we got a warning: `Use of undeclared Var dirac-sample.demo/hello! at line 1 <dirac repl>`.
-This is expected because REPL environment has no idea that such function exists. It just blindly transpiled our command into Javascript.
 
-As you probably know you have to first require (or eval) namespace in the REPL context to make it aware of namespace content.
+As you probably know you should first require (or eval) namespace in the REPL context to make it aware of namespace content.
 
     (require 'dirac-sample.demo)
-
-Now you can call `(dirac-sample.demo/hello! "World!")` and it works without warnings.
 
 But still you have to type fully qualified name because currently you are in `cljs.user` namespace. To switch you can use `in-ns` special function.
 
@@ -127,20 +122,20 @@ Also property names in the scope panel are sorted and displayed in a more friend
 
 Now hit ESC to bring up console drawer. Make sure you are switched to Dirac REPL and then enter:
 
-    js/items
+    numbers
 
-You should see actual value `(0 1 2)` of the `items` variable from local scope (formatted by custom formatters from cljs-devtools).
-Same way as you would expect when evaluating a Javascript command in breakpoint context. Actually you can try it.
-Hit "Page Up" to switch to Javascript console prompt (white background) and enter:
+You should see actual value `(0 1 2)` of the `numbers` variable from local scope (formatted by custom formatters from cljs-devtools).
+Same way as you would expect when evaluating a Javascript command in a breakpoint context. Actually you can try it.
+Hit `CTRL+.` to switch to Javascript console prompt (white background) and enter:
 
-    items
+    numbers
 
 This should return the same output.
 
-And now return back to Dirac REPL by pressing "Page Up" again and enter:
+And now return back to Dirac REPL by pressing `CTRL+.` again and enter:
 
-    (str (map inc js/items))
+    (str (map inc numbers))
 
 You should get back a string `"(1 2 3)"`.
 
-This is a proof that Dirac REPL can execute arbitrary ClojureScript code in the context of selected stack frame.
+This is a proof that Dirac REPL can execute arbitrary ClojureScript code in the context of a selected stack frame.
