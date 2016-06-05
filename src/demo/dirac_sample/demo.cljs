@@ -1,6 +1,6 @@
 (ns dirac-sample.demo
   (:require-macros [dirac-sample.logging :refer [log]])
-  (:require [dirac.runtime :as dirac]
+  (:require [dirac.runtime :as dirac :refer [get-tag]]
             [devtools.core :as devtools]))
 
 ; -- installation -----------------------------------------------------------------------------------------------------------
@@ -8,6 +8,8 @@
 (enable-console-print!)
 (devtools/install!)
 (dirac/install!)
+
+(println "tag:" (get-tag))
 
 ; -- hello demo -------------------------------------------------------------------------------------------------------------
 
