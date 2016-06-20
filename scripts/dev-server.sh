@@ -12,6 +12,6 @@ pushd "$DEVSERVER_ROOT"
 
 echo "starting HTTP server on port $DEVSERVER_PORT => http://localhost:$DEVSERVER_PORT"
 
-python -m SimpleHTTPServer "$DEVSERVER_PORT"
+python -m SimpleHTTPServer "$DEVSERVER_PORT" 2> /dev/null
 
 popd

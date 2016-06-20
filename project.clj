@@ -3,15 +3,15 @@
   :url "https://github.com/binaryage/dirac-sample"
 
   :dependencies [[org.clojure/clojure "1.8.0"]
-                 [org.clojure/clojurescript "1.9.14"]
-                 [binaryage/devtools "0.6.1"]
-                 [binaryage/dirac "0.6.0"]
-                 [figwheel "0.5.3-2"]]
+                 [org.clojure/clojurescript "1.9.76"]
+                 [binaryage/devtools "0.7.1"]
+                 [binaryage/dirac "0.6.1"]
+                 [figwheel "0.5.4-3"]]
 
   :plugins [[lein-cljsbuild "1.1.3"]
             [lein-shell "0.5.0"]
             [lein-cooper "1.2.2"]
-            [lein-figwheel "0.5.3-2"]]
+            [lein-figwheel "0.5.4-3"]]
 
   ; =========================================================================================================================
 
@@ -35,9 +35,9 @@
              {:dependencies ^:replace [[org.clojure/clojure "1.7.0"]
                                        [org.clojure/tools.nrepl "0.2.12"]                                                     ; for some reason this is needed for Clojure 1.7
                                        [clojure-complete "0.2.4" :exclusions [org.clojure/clojure]]                           ; for some reason this is needed for Clojure 1.7
-                                       [org.clojure/clojurescript "1.9.14"]
-                                       [binaryage/devtools "0.6.1"]
-                                       [binaryage/dirac "0.6.0"]]}
+                                       [org.clojure/clojurescript "1.9.76"]
+                                       [binaryage/devtools "0.7.1"]
+                                       [binaryage/dirac "0.6.1"]]}
 
              ; --------------------------------------------------------------------------------------------------------------
              :demo
@@ -136,17 +136,22 @@
   ; =========================================================================================================================
 
   :aliases {"demo"               ["with-profile" "+demo" "do"
+                                  "clean,"
                                   "cljsbuild" "once,"
                                   "shell" "scripts/dev-server.sh"]
             "demo17"             ["with-profile" "+demo,+clojure17" "do"
+                                  "clean,"
                                   "cljsbuild" "once,"
                                   "shell" "scripts/dev-server.sh"]
             "repl17"             ["with-profile" "+base,+repl,+clojure17,+checkouts" "repl"]
+            "dev-repl"           ["with-profile" "+base,+repl,+checkouts" "repl"]
             "repl-cider"         ["with-profile" "+base,+repl,+checkouts,+cider" "repl"]
             "dev-figwheel"       ["with-profile" "+demo,+tests,+checkouts,+figwheel" "figwheel" "demo" "tests"]
             "auto-compile-tests" ["with-profile" "+tests,+checkouts" "cljsbuild" "auto"]
             "auto-compile-demo"  ["with-profile" "+demo,+checkouts" "cljsbuild" "auto"]
-            "dev"                ["with-profile" "+cooper-config" "cooper"]
+            "dev"                ["with-profile" "+cooper-config" "do"
+                                  "clean,"
+                                  "cooper"]
             "demo-advanced"      ["with-profile" "+demo-advanced" "do"
                                   "cljsbuild" "once,"
                                   "shell" "scripts/dev-server.sh"]})
