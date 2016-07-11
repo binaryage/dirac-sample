@@ -3,15 +3,15 @@
   :url "https://github.com/binaryage/dirac-sample"
 
   :dependencies [[org.clojure/clojure "1.8.0"]
-                 [org.clojure/clojurescript "1.9.76"]
+                 [org.clojure/clojurescript "1.9.89"]
                  [binaryage/devtools "0.7.1"]
-                 [binaryage/dirac "0.6.1"]
+                 [binaryage/dirac "0.6.2"]
                  [figwheel "0.5.4-3"]]
 
   :plugins [[lein-cljsbuild "1.1.3"]
             [lein-shell "0.5.0"]
             [lein-cooper "1.2.2"]
-            [lein-figwheel "0.5.4-3"]]
+            [lein-figwheel "0.5.4-7"]]
 
   ; =========================================================================================================================
 
@@ -35,9 +35,9 @@
              {:dependencies ^:replace [[org.clojure/clojure "1.7.0"]
                                        [org.clojure/tools.nrepl "0.2.12"]                                                     ; for some reason this is needed for Clojure 1.7
                                        [clojure-complete "0.2.4" :exclusions [org.clojure/clojure]]                           ; for some reason this is needed for Clojure 1.7
-                                       [org.clojure/clojurescript "1.9.76"]
+                                       [org.clojure/clojurescript "1.9.89"]
                                        [binaryage/devtools "0.7.1"]
-                                       [binaryage/dirac "0.6.1"]]}
+                                       [binaryage/dirac "0.6.2"]]}
 
              ; --------------------------------------------------------------------------------------------------------------
              :demo
