@@ -4,9 +4,9 @@
 
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript "1.9.89"]
-                 [binaryage/devtools "0.7.1"]
-                 [binaryage/dirac "0.6.2"]
-                 [figwheel "0.5.4-3"]]
+                 [binaryage/devtools "0.7.2"]
+                 [binaryage/dirac "0.6.3"]
+                 [figwheel "0.5.4-7"]]
 
   :plugins [[lein-cljsbuild "1.1.3"]
             [lein-shell "0.5.0"]
@@ -36,8 +36,8 @@
                                        [org.clojure/tools.nrepl "0.2.12"]                                                     ; for some reason this is needed for Clojure 1.7
                                        [clojure-complete "0.2.4" :exclusions [org.clojure/clojure]]                           ; for some reason this is needed for Clojure 1.7
                                        [org.clojure/clojurescript "1.9.89"]
-                                       [binaryage/devtools "0.7.1"]
-                                       [binaryage/dirac "0.6.2"]]}
+                                       [binaryage/devtools "0.7.2"]
+                                       [binaryage/dirac "0.6.3"]]}
 
              ; --------------------------------------------------------------------------------------------------------------
              :demo
@@ -76,7 +76,7 @@
 
              ; --------------------------------------------------------------------------------------------------------------
              :cider
-             {:dependencies [[cider/cider-nrepl "0.12.0"]]
+             {:dependencies [[cider/cider-nrepl "0.13.0"]]
               :repl-options {:nrepl-middleware [cider.nrepl.middleware.apropos/wrap-apropos
                                                 cider.nrepl.middleware.classpath/wrap-classpath
                                                 cider.nrepl.middleware.complete/wrap-complete
