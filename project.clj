@@ -47,6 +47,8 @@
                                     :compiler     {:output-to            "resources/public/_compiled/demo/demo.js"
                                                    :output-dir           "resources/public/_compiled/demo"
                                                    :asset-path           "_compiled/demo"
+                                                   :preloads             [devtools.preload]
+                                                   :main                 dirac-sample.demo
                                                    :optimizations        :none
                                                    :source-map           true
                                                    :source-map-timestamp true}}}}}
@@ -70,6 +72,8 @@
                                     :compiler     {:output-to            "resources/public/_compiled/tests/tests.js"
                                                    :output-dir           "resources/public/_compiled/tests"
                                                    :asset-path           "_compiled/tests"
+                                                   :preloads             [devtools.preload]
+                                                   :main                 dirac-sample.tests
                                                    :optimizations        :none
                                                    :source-map           true
                                                    :source-map-timestamp true}}}}}

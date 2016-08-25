@@ -1,11 +1,9 @@
 (ns dirac-sample.tests
   (:require-macros [dirac-sample.logging :refer [log]])
-  (:require [dirac.runtime :as dirac]
-            [devtools.core :as devtools]))
+  (:require [dirac.runtime :as dirac]))
 
 ; -- installation -----------------------------------------------------------------------------------------------------------
 
-(devtools/install!)
 (dirac/install!)
 
 ; -- issue #7 ---------------------------------------------------------------------------------------------------------------
