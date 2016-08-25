@@ -1,15 +1,12 @@
 (ns dirac-sample.demo
   (:require-macros [dirac-sample.logging :refer [log]])
-  (:require [dirac.runtime :as dirac :refer [get-tag]]
-            [goog.string :as gstring]
-            [goog.object :as gobj]))
+  (:require [dirac.runtime :as dirac]))
 
 ; -- installation -----------------------------------------------------------------------------------------------------------
 
 (enable-console-print!)
-(dirac/install!)
 
-(println "tag:" (get-tag))
+(println "tag:" (dirac/get-tag))
 
 ; -- hello demo -------------------------------------------------------------------------------------------------------------
 

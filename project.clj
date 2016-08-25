@@ -47,7 +47,7 @@
                                     :compiler     {:output-to            "resources/public/_compiled/demo/demo.js"
                                                    :output-dir           "resources/public/_compiled/demo"
                                                    :asset-path           "_compiled/demo"
-                                                   :preloads             [devtools.preload]
+                                                   :preloads             [devtools.preload dirac.runtime.preload]
                                                    :main                 dirac-sample.demo
                                                    :optimizations        :none
                                                    :source-map           true
@@ -62,6 +62,8 @@
                                                    :output-dir    "resources/public/_compiled/demo_advanced"
                                                    :asset-path    "_compiled/demo_advanced"
                                                    :pseudo-names  true
+                                                   :preloads      [dirac.runtime.preload]
+                                                   :main          [dirac-sample.demo]
                                                    :optimizations :advanced}}}}}
 
              ; --------------------------------------------------------------------------------------------------------------
@@ -72,7 +74,7 @@
                                     :compiler     {:output-to            "resources/public/_compiled/tests/tests.js"
                                                    :output-dir           "resources/public/_compiled/tests"
                                                    :asset-path           "_compiled/tests"
-                                                   :preloads             [devtools.preload]
+                                                   :preloads             [devtools.preload dirac.runtime.preload]
                                                    :main                 dirac-sample.tests
                                                    :optimizations        :none
                                                    :source-map           true
