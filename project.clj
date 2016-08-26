@@ -48,6 +48,8 @@
                                                    :output-dir           "resources/public/_compiled/demo"
                                                    :asset-path           "_compiled/demo"
                                                    :preloads             [devtools.preload dirac.runtime.preload]
+                                                   :external-config {:dirac.runtime/config {:agent-verbose true
+                                                                                            :weasel-verbose true}}
                                                    :main                 dirac-sample.demo
                                                    :optimizations        :none
                                                    :source-map           true
