@@ -5,7 +5,7 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript "1.9.229"]
                  [binaryage/devtools "0.8.2"]
-                 [binaryage/dirac "0.6.6"]
+                 [binaryage/dirac "0.6.7"]
                  [figwheel "0.5.7"]]
 
   :plugins [[lein-cljsbuild "1.1.4"]
@@ -37,7 +37,7 @@
                                        [clojure-complete "0.2.4" :exclusions [org.clojure/clojure]]                           ; for some reason this is needed for Clojure 1.7
                                        [org.clojure/clojurescript "1.9.229"]
                                        [binaryage/devtools "0.8.2"]
-                                       [binaryage/dirac "0.6.6"]]}
+                                       [binaryage/dirac "0.6.7"]]}
 
              ; --------------------------------------------------------------------------------------------------------------
              :demo
