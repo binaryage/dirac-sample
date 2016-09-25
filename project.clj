@@ -2,7 +2,7 @@
   :description "An example integration of Dirac DevTools"
   :url "https://github.com/binaryage/dirac-sample"
 
-  :dependencies [[org.clojure/clojure "1.8.0"]
+  :dependencies [[org.clojure/clojure "1.9.0-alpha12"]
                  [org.clojure/clojurescript "1.9.229"]
                  [binaryage/devtools "0.8.2"]
                  [binaryage/dirac "0.6.7"]
@@ -33,11 +33,18 @@
   :profiles {; --------------------------------------------------------------------------------------------------------------
              :clojure17
              {:dependencies ^:replace [[org.clojure/clojure "1.7.0"]
-                                       [org.clojure/tools.nrepl "0.2.12"]                                                     ; for some reason this is needed for Clojure 1.7
-                                       [clojure-complete "0.2.4" :exclusions [org.clojure/clojure]]                           ; for some reason this is needed for Clojure 1.7
+                                       [org.clojure/clojurescript "1.7.228"]
+                                       [binaryage/devtools "0.8.2"]
+                                       [binaryage/dirac "0.6.7"]]}
+
+             :clojure18
+             {:dependencies ^:replace [[org.clojure/clojure "1.8.0"]
                                        [org.clojure/clojurescript "1.9.229"]
                                        [binaryage/devtools "0.8.2"]
                                        [binaryage/dirac "0.6.7"]]}
+
+             :clojure19
+             {:dependencies []}
 
              ; --------------------------------------------------------------------------------------------------------------
              :demo
@@ -63,7 +70,7 @@
                                                    :asset-path    "_compiled/demo_advanced"
                                                    :pseudo-names  true
                                                    :preloads      [dirac.runtime.preload]
-                                                   :main          [dirac-sample.demo]
+                                                   :main          dirac-sample.demo
                                                    :optimizations :advanced}}}}}
 
              ; --------------------------------------------------------------------------------------------------------------
@@ -105,7 +112,9 @@
               }
              ; --------------------------------------------------------------------------------------------------------------
              :repl
-             {:repl-options {:port             8230
+             {:dependencies [[org.clojure/tools.nrepl "0.2.12"]
+                             [clojure-complete "0.2.4" :exclusions [org.clojure/clojure]]]
+              :repl-options {:port             8230
                              :nrepl-middleware [dirac.nrepl/middleware]
                              :init             (do
                                                  (require 'dirac.agent)
@@ -128,36 +137,46 @@
                                                #=(eval leiningen.core.classpath/checkout-deps-paths)]
               :cljsbuild            {:builds
                                      {:demo
-                                      {:source-paths ["checkouts/cljs-devtools/src"
+                                      {:source-paths ["checkouts/cljs-devtools/src/lib"
                                                       "checkouts/dirac/src/runtime"]}
                                       :tests
-                                      {:source-paths ["checkouts/cljs-devtools/src"
+                                      {:source-paths ["checkouts/cljs-devtools/src/lib"
                                                       "checkouts/dirac/src/runtime"]}}}}
 
              ; --------------------------------------------------------------------------------------------------------------
              :cooper-config
-             {:cooper {"figwheel"   ["lein" "dev-figwheel"]
-                       "dev-server" ["scripts/dev-server.sh"]}}}
+             {:cooper {"figwheel" ["lein" "figwheel-dev"]
+                       "server"   ["scripts/dev-server.sh"]}}}
 
   ; =========================================================================================================================
 
-  :aliases {"demo"               ["with-profile" "+demo" "do"
-                                  "clean,"
-                                  "cljsbuild" "once,"
-                                  "shell" "scripts/dev-server.sh"]
+  :aliases {"demo"               "demo19"
+
+            "demo19"             ["with-profile" "+demo,+clojure19" "do"
+                                  ["clean"]
+                                  ["cljsbuild" "once"]
+                                  ["shell" "scripts/dev-server.sh"]]
+            "demo18"             ["with-profile" "+demo,+clojure18" "do"
+                                  ["clean"]
+                                  ["cljsbuild" "once"]
+                                  ["shell" "scripts/dev-server.sh"]]
             "demo17"             ["with-profile" "+demo,+clojure17" "do"
-                                  "clean,"
-                                  "cljsbuild" "once,"
-                                  "shell" "scripts/dev-server.sh"]
-            "repl17"             ["with-profile" "+base,+repl,+clojure17,+checkouts" "repl"]
-            "dev-repl"           ["with-profile" "+base,+repl,+checkouts" "repl"]
-            "repl-cider"         ["with-profile" "+base,+repl,+checkouts,+cider" "repl"]
-            "dev-figwheel"       ["with-profile" "+demo,+tests,+checkouts,+figwheel" "figwheel" "demo" "tests"]
+                                  ["clean"]
+                                  ["cljsbuild" "once"]
+                                  ["shell" "scripts/dev-server.sh"]]
+            "demo-advanced"      ["with-profile" "+demo-advanced" "do"
+                                  ["cljsbuild" "once"]
+                                  ["shell" "scripts/dev-server.sh"]]
+
+            "repl17"             ["with-profile" "+repl,+clojure17" "repl"]
+            "repl18"             ["with-profile" "+repl,+clojure18" "repl"]
+            "repl19"             ["with-profile" "+repl,+clojure19" "repl"]
+            "repl-dev"           ["with-profile" "+repl,+clojure19,+checkouts" "repl"]
+            "repl-cider"         ["with-profile" "+repl,+clojure19,+cider" "repl"]
+
+            "figwheel-dev"       ["with-profile" "+demo,+tests,+checkouts,+figwheel" "figwheel" "demo" "tests"]
             "auto-compile-tests" ["with-profile" "+tests,+checkouts" "cljsbuild" "auto"]
             "auto-compile-demo"  ["with-profile" "+demo,+checkouts" "cljsbuild" "auto"]
             "dev"                ["with-profile" "+cooper-config" "do"
-                                  "clean,"
-                                  "cooper"]
-            "demo-advanced"      ["with-profile" "+demo-advanced" "do"
-                                  "cljsbuild" "once,"
-                                  "shell" "scripts/dev-server.sh"]})
+                                  ["clean"]
+                                  ["cooper"]]})
