@@ -2,25 +2,26 @@
   :description "An example integration of Dirac DevTools"
   :url "https://github.com/binaryage/dirac-sample"
 
-  :dependencies [[org.clojure/clojure "1.9.0-alpha12"]
+  :dependencies [[org.clojure/clojure "1.9.0-alpha13"]
                  [org.clojure/clojurescript "1.9.229"]
                  [binaryage/devtools "0.8.2"]
-                 [binaryage/dirac "0.6.7"]
-                 [figwheel "0.5.7"]]
+                 [binaryage/dirac "0.7.1"]
+                 [figwheel "0.5.8"]]
 
   :plugins [[lein-cljsbuild "1.1.4"]
             [lein-shell "0.5.0"]
             [lein-cooper "1.2.2"]
-            [lein-figwheel "0.5.7"]]
+            [lein-figwheel "0.5.8"]]
 
   ; =========================================================================================================================
 
   :source-paths ["src/shared"
+                 "scripts"                                                                                                    ; just for IntelliJ
                  "src/demo"
                  "src/tests"]
 
-  :clean-targets ^{:protect false} ["resources/public/_compiled"
-                                    "target"]
+  :clean-targets ^{:protect false} ["target"
+                                    "resources/public/.compiled"]
 
   ; this effectively disables checkouts and gives us a chance to re-enable them on per-profile basis, see :checkouts profile
   ; http://jakemccrary.com/blog/2015/03/24/advanced-leiningen-checkouts-configuring-what-ends-up-on-your-classpath/
@@ -35,13 +36,13 @@
              {:dependencies ^:replace [[org.clojure/clojure "1.7.0"]
                                        [org.clojure/clojurescript "1.7.228"]
                                        [binaryage/devtools "0.8.2"]
-                                       [binaryage/dirac "0.6.7"]]}
+                                       [binaryage/dirac "0.7.1"]]}
 
              :clojure18
              {:dependencies ^:replace [[org.clojure/clojure "1.8.0"]
                                        [org.clojure/clojurescript "1.9.229"]
                                        [binaryage/devtools "0.8.2"]
-                                       [binaryage/dirac "0.6.7"]]}
+                                       [binaryage/dirac "0.7.1"]]}
 
              :clojure19
              {:dependencies []}
@@ -51,23 +52,22 @@
              {:cljsbuild {:builds {:demo
                                    {:source-paths ["src/shared"
                                                    "src/demo"]
-                                    :compiler     {:output-to            "resources/public/_compiled/demo/demo.js"
-                                                   :output-dir           "resources/public/_compiled/demo"
-                                                   :asset-path           "_compiled/demo"
-                                                   :preloads             [devtools.preload dirac.runtime.preload]
-                                                   :main                 dirac-sample.demo
-                                                   :optimizations        :none
-                                                   :source-map           true
-                                                   :source-map-timestamp true}}}}}
+                                    :compiler     {:output-to     "resources/public/.compiled/demo/demo.js"
+                                                   :output-dir    "resources/public/.compiled/demo"
+                                                   :asset-path    ".compiled/demo"
+                                                   :preloads      [devtools.preload dirac.runtime.preload]
+                                                   :main          dirac-sample.demo
+                                                   :optimizations :none
+                                                   :source-map    true}}}}}
 
              ; --------------------------------------------------------------------------------------------------------------
              :demo-advanced
              {:cljsbuild {:builds {:demo-advanced
                                    {:source-paths ["src/shared"
                                                    "src/demo"]
-                                    :compiler     {:output-to     "resources/public/_compiled/demo_advanced/dirac_sample.js"
-                                                   :output-dir    "resources/public/_compiled/demo_advanced"
-                                                   :asset-path    "_compiled/demo_advanced"
+                                    :compiler     {:output-to     "resources/public/.compiled/demo_advanced/dirac_sample.js"
+                                                   :output-dir    "resources/public/.compiled/demo_advanced"
+                                                   :asset-path    ".compiled/demo_advanced"
                                                    :pseudo-names  true
                                                    :preloads      [dirac.runtime.preload]
                                                    :main          dirac-sample.demo
@@ -78,14 +78,13 @@
              {:cljsbuild {:builds {:tests
                                    {:source-paths ["src/shared"
                                                    "src/tests"]
-                                    :compiler     {:output-to            "resources/public/_compiled/tests/tests.js"
-                                                   :output-dir           "resources/public/_compiled/tests"
-                                                   :asset-path           "_compiled/tests"
-                                                   :preloads             [devtools.preload dirac.runtime.preload]
-                                                   :main                 dirac-sample.tests
-                                                   :optimizations        :none
-                                                   :source-map           true
-                                                   :source-map-timestamp true}}}}}
+                                    :compiler     {:output-to     "resources/public/.compiled/tests/tests.js"
+                                                   :output-dir    "resources/public/.compiled/tests"
+                                                   :asset-path    ".compiled/tests"
+                                                   :preloads      [devtools.preload dirac.runtime.preload]
+                                                   :main          dirac-sample.tests
+                                                   :optimizations :none
+                                                   :source-map    true}}}}}
 
              ; --------------------------------------------------------------------------------------------------------------
              :cider
@@ -112,21 +111,48 @@
               }
              ; --------------------------------------------------------------------------------------------------------------
              :repl
-             {:dependencies [[org.clojure/tools.nrepl "0.2.12"]
-                             [clojure-complete "0.2.4" :exclusions [org.clojure/clojure]]]
-              :repl-options {:port             8230
+             {:repl-options {:port             8230
                              :nrepl-middleware [dirac.nrepl/middleware]
                              :init             (do
                                                  (require 'dirac.agent)
                                                  (dirac.agent/boot!))}}
 
              ; --------------------------------------------------------------------------------------------------------------
-             :figwheel
-             {:figwheel  {:server-port 7111
-                          :repl        false}
+             :figwheel-config
+             {:figwheel  {:server-port    7111
+                          :server-logfile ".figwheel/demo.log"
+                          :repl           false}
               :cljsbuild {:builds
                           {:demo
                            {:figwheel true}}}}
+
+             :figwheel-nrepl
+             [:figwheel-config
+              ; following https://github.com/bhauman/lein-figwheel/wiki/Using-the-Figwheel-REPL-within-NRepl
+              {:dependencies [[figwheel-sidecar "0.5.8"]]
+               :repl-options {:init ^:replace (do
+                                                (require 'dirac.agent)
+                                                (use 'figwheel-sidecar.repl-api)
+                                                (start-figwheel!
+                                                  {:figwheel-options {:server-port 7111}                                      ;; <-- figwheel server config goes here
+                                                   :build-ids        ["demo"]                                                 ;; <-- a vector of build ids to start autobuilding
+                                                   :all-builds                                                                ;; <-- supply your build configs here
+                                                                     [{:id           "demo"
+                                                                       :figwheel     true
+                                                                       :source-paths ["src/shared"
+                                                                                      "src/demo"]
+                                                                       :compiler     {:output-to     "resources/public/.compiled/demo/demo.js"
+                                                                                      :output-dir    "resources/public/.compiled/demo"
+                                                                                      :asset-path    ".compiled/demo"
+                                                                                      :preloads      ['devtools.preload 'dirac.runtime.preload]
+                                                                                      :main          'dirac-sample.demo
+                                                                                      :optimizations :none
+                                                                                      :source-map    true}}]})
+                                                (dirac.agent/boot!)
+                                                #_(cljs-repl))
+
+                              }
+               }]
 
              ; --------------------------------------------------------------------------------------------------------------
              :checkouts
@@ -173,8 +199,9 @@
             "repl19"             ["with-profile" "+repl,+clojure19" "repl"]
             "repl-dev"           ["with-profile" "+repl,+clojure19,+checkouts" "repl"]
             "repl-cider"         ["with-profile" "+repl,+clojure19,+cider" "repl"]
+            "repl-figwheel"      ["with-profile" "+repl,+clojure19,+checkouts,+figwheel-nrepl" "repl"]
 
-            "figwheel-dev"       ["with-profile" "+demo,+tests,+checkouts,+figwheel" "figwheel" "demo" "tests"]
+            "figwheel-dev"       ["with-profile" "+demo,+tests,+checkouts,+figwheel-config" "figwheel" "demo" "tests"]
             "auto-compile-tests" ["with-profile" "+tests,+checkouts" "cljsbuild" "auto"]
             "auto-compile-demo"  ["with-profile" "+demo,+checkouts" "cljsbuild" "auto"]
             "dev"                ["with-profile" "+cooper-config" "do"
