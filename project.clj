@@ -5,7 +5,7 @@
   :dependencies [[org.clojure/clojure "1.9.0-alpha13"]
                  [org.clojure/clojurescript "1.9.229"]
                  [binaryage/devtools "0.8.2"]
-                 [binaryage/dirac "0.7.1"]
+                 [binaryage/dirac "0.7.2"]
                  [figwheel "0.5.8"]]
 
   :plugins [[lein-cljsbuild "1.1.4"]
@@ -36,13 +36,13 @@
              {:dependencies ^:replace [[org.clojure/clojure "1.7.0"]
                                        [org.clojure/clojurescript "1.7.228"]
                                        [binaryage/devtools "0.8.2"]
-                                       [binaryage/dirac "0.7.1"]]}
+                                       [binaryage/dirac "0.7.2"]]}
 
              :clojure18
              {:dependencies ^:replace [[org.clojure/clojure "1.8.0"]
                                        [org.clojure/clojurescript "1.9.229"]
                                        [binaryage/devtools "0.8.2"]
-                                       [binaryage/dirac "0.7.1"]]}
+                                       [binaryage/dirac "0.7.2"]]}
 
              :clojure19
              {:dependencies []}
@@ -88,7 +88,7 @@
 
              ; --------------------------------------------------------------------------------------------------------------
              :cider
-             {:dependencies [[cider/cider-nrepl "0.13.0"]]
+             {:dependencies [[cider/cider-nrepl "0.14.0"]]
               :repl-options {:nrepl-middleware [cider.nrepl.middleware.apropos/wrap-apropos
                                                 cider.nrepl.middleware.classpath/wrap-classpath
                                                 cider.nrepl.middleware.complete/wrap-complete
