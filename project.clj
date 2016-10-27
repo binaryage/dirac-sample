@@ -109,6 +109,17 @@
                                                 cider.nrepl.middleware.undef/wrap-undef
                                                 cider.nrepl.middleware.version/wrap-version]}
               }
+
+             :dirac-logging
+             {:dependencies [[clj-logging-config "1.9.12"]]
+              :repl-options {:init ^:replace (do
+                                               (require 'dirac.agent)
+                                               (require 'dirac.logging)
+                                               (dirac.logging/setup! {:log-out   :console
+                                                                      :log-level "DEBUG"
+                                                                      })
+                                               (dirac.agent/boot!))}}
+
              ; --------------------------------------------------------------------------------------------------------------
              :repl
              {:repl-options {:port             8230
@@ -125,6 +136,9 @@
               :cljsbuild {:builds
                           {:demo
                            {:figwheel true}}}}
+
+             :figwheel-repl
+             {:figwheel {:repl true}}
 
              :figwheel-nrepl
              [:figwheel-config
@@ -197,11 +211,12 @@
             "repl17"             ["with-profile" "+repl,+clojure17" "repl"]
             "repl18"             ["with-profile" "+repl,+clojure18" "repl"]
             "repl19"             ["with-profile" "+repl,+clojure19" "repl"]
-            "repl-dev"           ["with-profile" "+repl,+clojure19,+checkouts" "repl"]
+            "repl-dev"           ["with-profile" "+repl,+clojure19,+checkouts,+dirac-logging" "repl"]
             "repl-cider"         ["with-profile" "+repl,+clojure19,+cider" "repl"]
             "repl-figwheel"      ["with-profile" "+repl,+clojure19,+checkouts,+figwheel-nrepl" "repl"]
 
             "figwheel-dev"       ["with-profile" "+demo,+tests,+checkouts,+figwheel-config" "figwheel" "demo" "tests"]
+            "fig-repl"           ["with-profile" "+repl,+clojure19,+figwheel-config,+figwheel-repl" "figwheel"]
             "auto-compile-tests" ["with-profile" "+tests,+checkouts" "cljsbuild" "auto"]
             "auto-compile-demo"  ["with-profile" "+demo,+checkouts" "cljsbuild" "auto"]
             "dev"                ["with-profile" "+cooper-config" "do"
