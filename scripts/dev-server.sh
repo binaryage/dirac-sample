@@ -21,6 +21,6 @@ else
 fi
 
 python -m SimpleHTTPServer "$DEVSERVER_PORT" 2> /dev/null \
-  || echo "Error: failed to start 'python -m SimpleHTTPServer ...', do you have python properly installed?"
+  || echo "Error: failed to start 'python -m SimpleHTTPServer ...', do you have python properly installed? isn't the port $DEVSERVER_PORT already used?"
 
 popd
