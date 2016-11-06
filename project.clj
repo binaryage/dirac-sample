@@ -5,7 +5,7 @@
   :dependencies [[org.clojure/clojure "1.9.0-alpha13"]
                  [org.clojure/clojurescript "1.9.293"]
                  [binaryage/devtools "0.8.2"]
-                 [binaryage/dirac "0.8.0"]
+                 [binaryage/dirac "0.8.1"]
                  [figwheel "0.5.8"]]
 
   :plugins [[lein-cljsbuild "1.1.4"]
@@ -36,13 +36,13 @@
              {:dependencies ^:replace [[org.clojure/clojure "1.7.0"]
                                        [org.clojure/clojurescript "1.7.228"]
                                        [binaryage/devtools "0.8.2"]
-                                       [binaryage/dirac "0.8.0"]]}
+                                       [binaryage/dirac "0.8.1"]]}
 
              :clojure18
              {:dependencies ^:replace [[org.clojure/clojure "1.8.0"]
                                        [org.clojure/clojurescript "1.9.293"]
                                        [binaryage/devtools "0.8.2"]
-                                       [binaryage/dirac "0.8.0"]]}
+                                       [binaryage/dirac "0.8.1"]]}
 
              :clojure19
              {:dependencies []}
@@ -116,8 +116,7 @@
                                                (require 'dirac.agent)
                                                (require 'dirac.logging)
                                                (dirac.logging/setup! {:log-out   :console
-                                                                      :log-level "DEBUG"
-                                                                      })
+                                                                      :log-level "DEBUG"})
                                                (dirac.agent/boot!))}}
 
              ; --------------------------------------------------------------------------------------------------------------
