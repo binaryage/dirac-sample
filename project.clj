@@ -4,8 +4,8 @@
 
   :dependencies [[org.clojure/clojure "1.9.0-alpha13"]
                  [org.clojure/clojurescript "1.9.293"]
-                 [binaryage/devtools "0.8.3"]
-                 [binaryage/dirac "1.0.0"]
+                 [binaryage/devtools "0.9.0"]
+                 [binaryage/dirac "1.1.0"]
                  [figwheel "0.5.8"]]
 
   :plugins [[lein-cljsbuild "1.1.4"]
@@ -18,10 +18,12 @@
   :source-paths ["src/shared"
                  "scripts"                                                                                                    ; just for IntelliJ
                  "src/demo"
+                 "src/demo-node"
                  "src/tests"]
 
   :clean-targets ^{:protect false} ["target"
-                                    "resources/public/.compiled"]
+                                    "resources/public/.compiled"
+                                    "resources/demo-node/.compiled"]
 
   ; this effectively disables checkouts and gives us a chance to re-enable them on per-profile basis, see :checkouts profile
   ; http://jakemccrary.com/blog/2015/03/24/advanced-leiningen-checkouts-configuring-what-ends-up-on-your-classpath/
@@ -35,14 +37,14 @@
              :clojure17
              {:dependencies ^:replace [[org.clojure/clojure "1.7.0"]
                                        [org.clojure/clojurescript "1.7.228"]
-                                       [binaryage/devtools "0.8.3"]
-                                       [binaryage/dirac "1.0.0"]]}
+                                       [binaryage/devtools "0.9.0"]
+                                       [binaryage/dirac "1.1.0"]]}
 
              :clojure18
              {:dependencies ^:replace [[org.clojure/clojure "1.8.0"]
                                        [org.clojure/clojurescript "1.9.293"]
-                                       [binaryage/devtools "0.8.3"]
-                                       [binaryage/dirac "1.0.0"]]}
+                                       [binaryage/devtools "0.9.0"]
+                                       [binaryage/dirac "1.1.0"]]}
 
              :clojure19
              {:dependencies []}
@@ -72,6 +74,20 @@
                                                    :preloads      [dirac.runtime.preload]
                                                    :main          dirac-sample.demo
                                                    :optimizations :advanced}}}}}
+
+             ; --------------------------------------------------------------------------------------------------------------
+             :demo-node
+             {:cljsbuild {:builds {:demo
+                                   {:source-paths ["src/shared"
+                                                   "src/demo-node"]
+                                    :compiler     {:output-to             "resources/demo-node/.compiled/demo.js"
+                                                   :output-dir            "resources/demo-node/.compiled"
+                                                   :asset-path            ".compiled"
+                                                   :source-map-asset-path "http://localhost:9988/.compiled"                   ; see run-demo-node-source-maps-server.sh, CLJS-1075
+                                                   :preloads              [devtools.preload dirac.runtime.preload]
+                                                   :main                  dirac-sample.demo
+                                                   :target                :nodejs
+                                                   :optimizations         :none}}}}}
 
              ; --------------------------------------------------------------------------------------------------------------
              :tests
@@ -206,6 +222,23 @@
             "demo-advanced"      ["with-profile" "+demo-advanced" "do"
                                   ["cljsbuild" "once"]
                                   ["shell" "scripts/dev-server.sh"]]
+
+            "demo-node"          "demo-node19"
+            "demo-node19"        ["with-profile" "+demo-node,+clojure19" "do"
+                                  ["clean"]
+                                  ["cljsbuild" "once"]
+                                  ["shell" "scripts/run-node-demo.sh"]]
+            "demo-node18"        ["with-profile" "+demo-node,+clojure18" "do"
+                                  ["clean"]
+                                  ["cljsbuild" "once"]
+                                  ["shell" "scripts/run-node-demo.sh"]]
+            "demo-node17"        ["with-profile" "+demo-node,+clojure17" "do"
+                                  ["clean"]
+                                  ["cljsbuild" "once"]
+                                  ["shell" "scripts/run-node-demo.sh"]]
+            "demo-node-dev"      ["with-profile" "+demo-node,+clojure19,+checkouts" "do"
+                                  ["cljsbuild" "once" "demo"]
+                                  ["shell" "scripts/run-node-demo.sh"]]
 
             "repl17"             ["with-profile" "+repl,+clojure17" "repl"]
             "repl18"             ["with-profile" "+repl,+clojure18" "repl"]

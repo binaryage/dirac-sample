@@ -12,6 +12,7 @@ pom.xml
 .repl*
 /checkouts*
 /resources/public/.compiled
+/resources/node/.compiled
 .idea
 *.iml
 .nrepl-port
