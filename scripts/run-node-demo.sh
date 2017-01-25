@@ -11,8 +11,10 @@ cd "$(dirname "${BASH_SOURCE[0]}")"; cd ..
 ROOT=`pwd`
 NODE_TARGET_ROOT="$ROOT/resources/demo-node"
 
-echo "launching source-maps server..."
-scripts/run-demo-node-source-maps-server.sh &
+if [ -z "$1" ]; then
+  echo "launching source-maps server..."
+  scripts/run-demo-node-source-maps-server.sh &
+fi
 
 pushd "$NODE_TARGET_ROOT" > /dev/null
 

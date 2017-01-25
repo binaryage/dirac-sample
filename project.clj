@@ -90,6 +90,10 @@
                                                    :optimizations         :none}}}}}
 
              ; --------------------------------------------------------------------------------------------------------------
+             :demo-node-inline-sm
+             {:cljsbuild {:builds {:demo {:compiler {:inline-source-maps true}}}}}
+
+             ; --------------------------------------------------------------------------------------------------------------
              :tests
              {:cljsbuild {:builds {:tests
                                    {:source-paths ["src/shared"
@@ -205,52 +209,55 @@
 
   ; =========================================================================================================================
 
-  :aliases {"demo"               "demo19"
+  :aliases {"demo"                     "demo19"
 
-            "demo19"             ["with-profile" "+demo,+clojure19" "do"
-                                  ["clean"]
-                                  ["cljsbuild" "once"]
-                                  ["shell" "scripts/dev-server.sh"]]
-            "demo18"             ["with-profile" "+demo,+clojure18" "do"
-                                  ["clean"]
-                                  ["cljsbuild" "once"]
-                                  ["shell" "scripts/dev-server.sh"]]
-            "demo17"             ["with-profile" "+demo,+clojure17" "do"
-                                  ["clean"]
-                                  ["cljsbuild" "once"]
-                                  ["shell" "scripts/dev-server.sh"]]
-            "demo-advanced"      ["with-profile" "+demo-advanced" "do"
-                                  ["cljsbuild" "once"]
-                                  ["shell" "scripts/dev-server.sh"]]
+            "demo19"                   ["with-profile" "+demo,+clojure19" "do"
+                                        ["clean"]
+                                        ["cljsbuild" "once"]
+                                        ["shell" "scripts/dev-server.sh"]]
+            "demo18"                   ["with-profile" "+demo,+clojure18" "do"
+                                        ["clean"]
+                                        ["cljsbuild" "once"]
+                                        ["shell" "scripts/dev-server.sh"]]
+            "demo17"                   ["with-profile" "+demo,+clojure17" "do"
+                                        ["clean"]
+                                        ["cljsbuild" "once"]
+                                        ["shell" "scripts/dev-server.sh"]]
+            "demo-advanced"            ["with-profile" "+demo-advanced" "do"
+                                        ["cljsbuild" "once"]
+                                        ["shell" "scripts/dev-server.sh"]]
 
-            "demo-node"          "demo-node19"
-            "demo-node19"        ["with-profile" "+demo-node,+clojure19" "do"
-                                  ["clean"]
-                                  ["cljsbuild" "once"]
-                                  ["shell" "scripts/run-node-demo.sh"]]
-            "demo-node18"        ["with-profile" "+demo-node,+clojure18" "do"
-                                  ["clean"]
-                                  ["cljsbuild" "once"]
-                                  ["shell" "scripts/run-node-demo.sh"]]
-            "demo-node17"        ["with-profile" "+demo-node,+clojure17" "do"
-                                  ["clean"]
-                                  ["cljsbuild" "once"]
-                                  ["shell" "scripts/run-node-demo.sh"]]
-            "demo-node-dev"      ["with-profile" "+demo-node,+clojure19,+checkouts" "do"
-                                  ["cljsbuild" "once" "demo"]
-                                  ["shell" "scripts/run-node-demo.sh"]]
+            "demo-node"                "demo-node19"
+            "demo-node19"              ["with-profile" "+demo-node,+clojure19" "do"
+                                        ["clean"]
+                                        ["cljsbuild" "once"]
+                                        ["shell" "scripts/run-node-demo.sh"]]
+            "demo-node18"              ["with-profile" "+demo-node,+clojure18" "do"
+                                        ["clean"]
+                                        ["cljsbuild" "once"]
+                                        ["shell" "scripts/run-node-demo.sh"]]
+            "demo-node17"              ["with-profile" "+demo-node,+clojure17" "do"
+                                        ["clean"]
+                                        ["cljsbuild" "once"]
+                                        ["shell" "scripts/run-node-demo.sh"]]
+            "demo-node-dev"            ["with-profile" "+demo-node,+clojure19,+checkouts" "do"
+                                        ["cljsbuild" "once" "demo"]
+                                        ["shell" "scripts/run-node-demo.sh"]]
+            "demo-node-dev-inlined-sm" ["with-profile" "+demo-node,+demo-node-inline-sm,+clojure19,+checkouts" "do"
+                                        ["cljsbuild" "once" "demo"]
+                                        ["shell" "scripts/run-node-demo.sh" "1"]]
 
-            "repl17"             ["with-profile" "+repl,+clojure17" "repl"]
-            "repl18"             ["with-profile" "+repl,+clojure18" "repl"]
-            "repl19"             ["with-profile" "+repl,+clojure19" "repl"]
-            "repl-dev"           ["with-profile" "+repl,+clojure19,+checkouts,+dirac-logging" "repl"]
-            "repl-cider"         ["with-profile" "+repl,+clojure19,+cider" "repl"]
-            "repl-figwheel"      ["with-profile" "+repl,+clojure19,+checkouts,+figwheel-nrepl" "repl"]
+            "repl17"                   ["with-profile" "+repl,+clojure17" "repl"]
+            "repl18"                   ["with-profile" "+repl,+clojure18" "repl"]
+            "repl19"                   ["with-profile" "+repl,+clojure19" "repl"]
+            "repl-dev"                 ["with-profile" "+repl,+clojure19,+checkouts,+dirac-logging" "repl"]
+            "repl-cider"               ["with-profile" "+repl,+clojure19,+cider" "repl"]
+            "repl-figwheel"            ["with-profile" "+repl,+clojure19,+checkouts,+figwheel-nrepl" "repl"]
 
-            "figwheel-dev"       ["with-profile" "+demo,+tests,+checkouts,+figwheel-config" "figwheel" "demo" "tests"]
-            "fig-repl"           ["with-profile" "+repl,+clojure19,+figwheel-config,+figwheel-repl" "figwheel"]
-            "auto-compile-tests" ["with-profile" "+tests,+checkouts" "cljsbuild" "auto"]
-            "auto-compile-demo"  ["with-profile" "+demo,+checkouts" "cljsbuild" "auto"]
-            "dev"                ["with-profile" "+cooper-config" "do"
-                                  ["clean"]
-                                  ["cooper"]]})
+            "figwheel-dev"             ["with-profile" "+demo,+tests,+checkouts,+figwheel-config" "figwheel" "demo" "tests"]
+            "fig-repl"                 ["with-profile" "+repl,+clojure19,+figwheel-config,+figwheel-repl" "figwheel"]
+            "auto-compile-tests"       ["with-profile" "+tests,+checkouts" "cljsbuild" "auto"]
+            "auto-compile-demo"        ["with-profile" "+demo,+checkouts" "cljsbuild" "auto"]
+            "dev"                      ["with-profile" "+cooper-config" "do"
+                                        ["clean"]
+                                        ["cooper"]]})
