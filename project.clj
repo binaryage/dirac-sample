@@ -3,15 +3,15 @@
   :url "https://github.com/binaryage/dirac-sample"
 
   :dependencies [[org.clojure/clojure "1.9.0-alpha14"]
-                 [org.clojure/clojurescript "1.9.293"]
+                 [org.clojure/clojurescript "1.9.456"]
                  [binaryage/devtools "0.9.0"]
-                 [binaryage/dirac "1.1.1"]
-                 [figwheel "0.5.8"]]
+                 [binaryage/dirac "1.1.2"]
+                 [figwheel "0.5.9"]]
 
   :plugins [[lein-cljsbuild "1.1.4"]
             [lein-shell "0.5.0"]
             [lein-cooper "1.2.2"]
-            [lein-figwheel "0.5.8"]]
+            [lein-figwheel "0.5.9"]]
 
   ; =========================================================================================================================
 
@@ -38,13 +38,13 @@
              {:dependencies ^:replace [[org.clojure/clojure "1.7.0"]
                                        [org.clojure/clojurescript "1.7.228"]
                                        [binaryage/devtools "0.9.0"]
-                                       [binaryage/dirac "1.1.1"]]}
+                                       [binaryage/dirac "1.1.2"]]}
 
              :clojure18
              {:dependencies ^:replace [[org.clojure/clojure "1.8.0"]
-                                       [org.clojure/clojurescript "1.9.293"]
+                                       [org.clojure/clojurescript "1.9.456"]
                                        [binaryage/devtools "0.9.0"]
-                                       [binaryage/dirac "1.1.1"]]}
+                                       [binaryage/dirac "1.1.2"]]}
 
              :clojure19
              {:dependencies []}
@@ -102,7 +102,6 @@
                                                    :output-dir    "resources/public/.compiled/tests"
                                                    :asset-path    ".compiled/tests"
                                                    :preloads      [devtools.preload dirac.runtime.preload]
-                                                   :main          dirac-sample.tests
                                                    :optimizations :none
                                                    :source-map    true}}}}}
 
@@ -162,7 +161,7 @@
              :figwheel-nrepl
              [:figwheel-config
               ; following https://github.com/bhauman/lein-figwheel/wiki/Using-the-Figwheel-REPL-within-NRepl
-              {:dependencies [[figwheel-sidecar "0.5.8"]]
+              {:dependencies [[figwheel-sidecar "0.5.9"]]
                :repl-options {:init ^:replace (do
                                                 (require 'dirac.agent)
                                                 (use 'figwheel-sidecar.repl-api)
