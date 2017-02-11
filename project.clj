@@ -3,9 +3,9 @@
   :url "https://github.com/binaryage/dirac-sample"
 
   :dependencies [[org.clojure/clojure "1.9.0-alpha14"]
-                 [org.clojure/clojurescript "1.9.456"]
+                 [org.clojure/clojurescript "1.9.473"]
                  [binaryage/devtools "0.9.0"]
-                 [binaryage/dirac "1.1.3"]
+                 [binaryage/dirac "1.1.4"]
                  [figwheel "0.5.9"]]
 
   :plugins [[lein-cljsbuild "1.1.4"]
@@ -38,13 +38,13 @@
              {:dependencies ^:replace [[org.clojure/clojure "1.7.0" :upgrade false]
                                        [org.clojure/clojurescript "1.7.228" :upgrade false]
                                        [binaryage/devtools "0.9.0"]
-                                       [binaryage/dirac "1.1.3"]]}
+                                       [binaryage/dirac "1.1.4"]]}
 
              :clojure18
              {:dependencies ^:replace [[org.clojure/clojure "1.8.0" :upgrade false]
                                        [org.clojure/clojurescript "1.9.456" :upgrade false]
                                        [binaryage/devtools "0.9.0"]
-                                       [binaryage/dirac "1.1.3"]]}
+                                       [binaryage/dirac "1.1.4"]]}
 
              :clojure19
              {:dependencies []}
@@ -135,7 +135,7 @@
                                                (require 'dirac.agent)
                                                (require 'dirac.logging)
                                                (dirac.logging/setup! {:log-out   :console
-                                                                      :log-level "DEBUG"})
+                                                                      :log-level "TRACE"})
                                                (dirac.agent/boot!))}}
 
              ; --------------------------------------------------------------------------------------------------------------
