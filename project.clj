@@ -4,8 +4,8 @@
 
   :dependencies [[org.clojure/clojure "1.9.0-alpha14"]
                  [org.clojure/clojurescript "1.9.473"]
-                 [binaryage/devtools "0.9.0"]
-                 [binaryage/dirac "1.1.4"]
+                 [binaryage/devtools "0.9.1"]
+                 [binaryage/dirac "1.1.5"]
                  [figwheel "0.5.9"]]
 
   :plugins [[lein-cljsbuild "1.1.4"]
@@ -37,14 +37,14 @@
              :clojure17
              {:dependencies ^:replace [[org.clojure/clojure "1.7.0" :upgrade false]
                                        [org.clojure/clojurescript "1.7.228" :upgrade false]
-                                       [binaryage/devtools "0.9.0"]
-                                       [binaryage/dirac "1.1.4"]]}
+                                       [binaryage/devtools "0.9.1"]
+                                       [binaryage/dirac "1.1.5"]]}
 
              :clojure18
              {:dependencies ^:replace [[org.clojure/clojure "1.8.0" :upgrade false]
                                        [org.clojure/clojurescript "1.9.456" :upgrade false]
-                                       [binaryage/devtools "0.9.0"]
-                                       [binaryage/dirac "1.1.4"]]}
+                                       [binaryage/devtools "0.9.1"]
+                                       [binaryage/dirac "1.1.5"]]}
 
              :clojure19
              {:dependencies []}
