@@ -40,3 +40,5 @@
   ;   6. move cursor at closing brace of following form and use Cursive's Tools -> REPL -> 'Send ... to REPL'
   ;
   (hello! "from Cursive REPL"))
+
+(log "demo loaded")
