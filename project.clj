@@ -202,6 +202,25 @@
                                                       "checkouts/dirac/src/runtime"]}}}}
 
              ; --------------------------------------------------------------------------------------------------------------
+             :debugger-5005
+             {:jvm-opts ["-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"]}
+
+             :suspended-debugger-5005
+             {:jvm-opts ["-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005"]}
+
+             :debugger-5006
+             {:jvm-opts ["-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5006"]}
+
+             :suspended-debugger-5006
+             {:jvm-opts ["-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5006"]}
+
+             :debugger-5007
+             {:jvm-opts ["-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5007"]}
+
+             :suspended-debugger-5007
+             {:jvm-opts ["-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5007"]}
+
+             ; --------------------------------------------------------------------------------------------------------------
              :cooper-config
              {:cooper {"figwheel" ["lein" "figwheel-dev"]
                        "server"   ["scripts/dev-server.sh"]}}}
@@ -249,7 +268,7 @@
             "repl17"                   ["with-profile" "+repl,+clojure17" "repl"]
             "repl18"                   ["with-profile" "+repl,+clojure18" "repl"]
             "repl19"                   ["with-profile" "+repl,+clojure19" "repl"]
-            "repl-dev"                 ["with-profile" "+repl,+clojure19,+checkouts,+dirac-logging" "repl"]
+            "repl-dev"                 ["with-profile" "+repl,+clojure19,+checkouts,+dirac-logging,+debugger-5005" "repl"]
             "repl-cider"               ["with-profile" "+repl,+clojure19,+cider" "repl"]
             "repl-figwheel"            ["with-profile" "+repl,+clojure19,+checkouts,+figwheel-nrepl" "repl"]
 
