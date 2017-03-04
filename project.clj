@@ -54,13 +54,17 @@
              {:cljsbuild {:builds {:demo
                                    {:source-paths ["src/shared"
                                                    "src/demo"]
-                                    :compiler     {:output-to     "resources/public/.compiled/demo/demo.js"
-                                                   :output-dir    "resources/public/.compiled/demo"
-                                                   :asset-path    ".compiled/demo"
-                                                   :preloads      [devtools.preload dirac.runtime.preload]
-                                                   :main          dirac-sample.demo
-                                                   :optimizations :none
-                                                   :source-map    true}}}}}
+                                    :compiler     {:output-to       "resources/public/.compiled/demo/demo.js"
+                                                   :output-dir      "resources/public/.compiled/demo"
+                                                   :asset-path      ".compiled/demo"
+                                                   :preloads        [devtools.preload dirac.runtime.preload]
+                                                   :main            dirac-sample.demo
+                                                   :external-config {:dirac.runtime/config {:nrepl-config {:reveal-url-script-path "scripts/reveal.sh"
+                                                                                                           ;:reveal-url-request-handler (fn [config url line column]
+                                                                                                           ;                              (str "ERR REPLY>" url))
+                                                                                                           }}}
+                                                   :optimizations   :none
+                                                   :source-map      true}}}}}
 
              ; --------------------------------------------------------------------------------------------------------------
              :demo-advanced
