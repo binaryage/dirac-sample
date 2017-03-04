@@ -104,7 +104,9 @@
                                                    "src/tests"]
                                     :compiler     {:output-to     "resources/public/.compiled/tests/tests.js"
                                                    :output-dir    "resources/public/.compiled/tests"
+                                                   :asset-path    ".compiled/tests"
                                                    :preloads      [devtools.preload dirac.runtime.preload]
+                                                   :main          dirac-sample.main
                                                    :optimizations :none
                                                    :source-map    true}}}}}
 
