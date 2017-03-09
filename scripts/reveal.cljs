@@ -40,12 +40,15 @@
 (defn path-segments [path]
   (filter (complement empty?) (string/split path "/")))
 
-(def call-spawn-api! [& args]
-  (.apply (.-spawnSync child-process-api) child-process-api (into-array args)))
+(defn strip-extra-nil-args [args]
+  (reverse (drop-while nil? (reverse args))))
+
+(defn call-spawn-api! [& args]
+  (let [sanitized-args (strip-extra-nil-args args)]                                                                           ; node API is strict about extra nil args
+    (.apply (.-spawnSync child-process-api) child-process-api (into-array sanitized-args))))
 
 (defn spawn! [cmd & [args opts]]
-  (let [cmd-with-args (keep identity [cmd (into-array args) opts])
-        result (apply call-spawn-api! cmd-with-args)
+  (let [result (call-spawn-api! cmd (into-array args) opts)
         stdout (.-stdout result)
         stderr (.-stderr result)
         status (.-status result)]
