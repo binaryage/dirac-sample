@@ -8,10 +8,9 @@
 
 ; -- node requires ----------------------------------------------------------------------------------------------------------
 
-(def url (js/require "url"))
-(def path (js/require "path"))
-(def fs (js/require "fs"))
-(def child-process (js/require "child_process"))
+(def url-api (js/require "url"))
+(def fs-api (js/require "fs"))
+(def child-process-api (js/require "child_process"))
 
 ; -- config -----------------------------------------------------------------------------------------------------------------
 
@@ -30,9 +29,9 @@
     (apply println args)))
 
 (defn list-dir [dir]
-  (let [items (map #(str dir "/" %) (.readdirSync fs dir))
+  (let [items (map #(str dir "/" %) (.readdirSync fs-api dir))
         * (fn [item]
-            (let [stat (.lstatSync fs item)]
+            (let [stat (.lstatSync fs-api item)]
               (if (.isDirectory stat)
                 (list-dir item)
                 [item])))]
@@ -41,8 +40,12 @@
 (defn path-segments [path]
   (filter (complement empty?) (string/split path "/")))
 
+(def call-spawn-api! [& args]
+  (.apply (.-spawnSync child-process-api) child-process-api (into-array args)))
+
 (defn spawn! [cmd & [args opts]]
-  (let [result (.apply (.-spawnSync child-process) child-process (into-array (keep identity [cmd (into-array args) opts])))
+  (let [cmd-with-args (keep identity [cmd (into-array args) opts])
+        result (apply call-spawn-api! cmd-with-args)
         stdout (.-stdout result)
         stderr (.-stderr result)
         status (.-status result)]
@@ -79,16 +82,16 @@
     best-candidate))
 
 (defn select-matching-file-for-url [file-url]
-  (let [parsed-url (.parse url file-url)
+  (let [parsed-url (.parse url-api file-url)
         file-path (.-pathname parsed-url)
         best-candidates (keep (partial find-best-candidate file-path) search-dirs)                                            ; for each search-dir find the best candidate
-        strong-candidates (filter #(> (second %) 1) best-candidates)                                                          ; take only candidates with score > 1 (thanks to clojure's convention to have at least 2-segments namespaces)
+        strong-candidates (filter #(> (second %) 1) best-candidates)                                                          ; take only candidates with score > 1 (thanks to clojure's convention to have at least 2-segment namespaces)
         winner (first (first strong-candidates))]
     winner))
 
 ; -- opening files ----------------------------------------------------------------------------------------------------------
 
-(defmulti open-file! (fn [method & _args] (keyword method)))
+(defmulti open-file! (fn [tool & _args] (keyword tool)))
 
 (defmethod open-file! :idea [_ path line _column]
   (let [file-line (str path ":" line)]
@@ -108,13 +111,11 @@
 
 (defn main! [args]
   (try
-    (let [res (apply work! args)]
-      (if-not (= res 0)
-        (js/process.exit res)))
+    (apply work! args)
     (catch :default e
       (print-err (str "Exception: " (.-message e) "\n" (.-stack e)))
-      (js/process.exit 101))))
+      101)))
 
 ; -- entry point ------------------------------------------------------------------------------------------------------------
 
-(main! *command-line-args*)
+(js/process.exit (main! *command-line-args*))
