@@ -68,12 +68,16 @@
   (count (take-while true? (map = reversed-candidate reversed-ideal))))
 
 (defn compute-file-score [reversed-ideal file]
-  [file (compute-score (reverse (path-segments file)) reversed-ideal)])
+  (let [score (compute-score (reverse (path-segments file)) reversed-ideal)]
+    [file score]))
+
+(defn compare-files-scores [file-score1 file-score2]
+  (compare (second file-score1) (second file-score2)))
 
 (defn compute-score-table [files ideal]
   (let [reversed-ideal (reverse ideal)
         table (map (partial compute-file-score reversed-ideal) files)]
-    (reverse (sort #(compare (second %1) (second %2)) table))))
+    (reverse (sort compare-files-scores table))))
 
 (defn find-best-candidate [file-path dir]
   (let [file-segments (path-segments file-path)
@@ -84,11 +88,14 @@
         best-candidate (first score-table)]
     best-candidate))
 
+(defn strong-candidate? [file-score]
+  (> (second file-score) 1))
+
 (defn select-matching-file-for-url [file-url]
   (let [parsed-url (.parse url-api file-url)
         file-path (.-pathname parsed-url)
         best-candidates (keep (partial find-best-candidate file-path) search-dirs)                                            ; for each search-dir find the best candidate
-        strong-candidates (filter #(> (second %) 1) best-candidates)                                                          ; take only candidates with score > 1 (thanks to clojure's convention to have at least 2-segment namespaces)
+        strong-candidates (filter strong-candidate? best-candidates)                                                          ; take only candidates with score > 1 (thanks to clojure's convention assume we have at least 2-segment namespaces)
         winner (first (first strong-candidates))]
     winner))
 
@@ -97,8 +104,8 @@
 (defmulti open-file! (fn [tool & _args] (keyword tool)))
 
 (defmethod open-file! :idea [_ path line _column]
-  (let [file-line (str path ":" line)]
-    (spawn! "idea" [file-line])))
+  (let [file+line (str path ":" line)]
+    (spawn! "idea" [file+line])))
 
 ; -- main work --------------------------------------------------------------------------------------------------------------
 
