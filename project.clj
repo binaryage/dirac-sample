@@ -227,8 +227,8 @@
 
              ; --------------------------------------------------------------------------------------------------------------
              :cooper-config
-             {:cooper {"figwheel" ["lein" "figwheel-dev"]
-                       "server"   ["scripts/dev-server.sh"]}}}
+             {:cooper {"figwheel" ["lein" "dev-fig"]
+                       "server"   ["lein" "dev-server"]}}}
 
   ; =========================================================================================================================
 
@@ -277,10 +277,11 @@
             "repl-cider"               ["with-profile" "+repl,+clojure19,+cider" "repl"]
             "repl-figwheel"            ["with-profile" "+repl,+clojure19,+checkouts,+figwheel-nrepl" "repl"]
 
-            "figwheel-dev"             ["with-profile" "+demo,+tests,+checkouts,+figwheel-config" "figwheel" "demo" "tests"]
             "fig-repl"                 ["with-profile" "+repl,+clojure19,+figwheel-config,+figwheel-repl" "figwheel"]
             "auto-compile-tests"       ["with-profile" "+tests,+checkouts" "cljsbuild" "auto"]
             "auto-compile-demo"        ["with-profile" "+demo,+checkouts" "cljsbuild" "auto"]
+            "dev-fig"                  ["with-profile" "+demo,+tests,+checkouts,+figwheel-config" "figwheel" "demo" "tests"]
+            "dev-server"               ["shell" "scripts/dev-server.sh"]
             "dev"                      ["with-profile" "+cooper-config" "do"
                                         ["clean"]
                                         ["cooper"]]})
