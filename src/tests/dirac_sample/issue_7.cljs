@@ -10,3 +10,5 @@
   (let [circular circular1]
     ; at this point we should be able to play with infinitely expanding structure "circular" in Scope Panel to expose issue #7
     (js-debugger)))
+
+(new x)

@@ -3,7 +3,7 @@
 This project is an example of integration of [**Dirac DevTools**](https://github.com/binaryage/dirac) into a
 Leiningen-based ClojureScript project.
 
-![](https://dl.dropboxusercontent.com/u/559047/dirac-main-01.png)
+![](https://box.binaryage.com/dirac-main-01.png)
 
 ## Local setup
 
@@ -25,7 +25,7 @@ Also you have to run it with [remote debugging](https://developer.chrome.com/dev
 
 Now you can install the [Dirac DevTools Chrome extension](https://chrome.google.com/webstore/detail/dirac-devtools/kbkdngfljkchidcjpnfcgcokkbhlkogi).
 
-After installation, should see a new extension icon next to your address bar <img src="https://dl.dropboxusercontent.com/u/559047/dirac-extension-icon.png" height="32">.
+After installation, should see a new extension icon next to your address bar <img src="https://box.binaryage.com/dirac-extension-icon.png" height="32">.
 
 Now you can launch the demo project from terminal:
 
