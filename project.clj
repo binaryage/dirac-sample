@@ -2,10 +2,10 @@
   :description "An example integration of Dirac DevTools"
   :url "https://github.com/binaryage/dirac-sample"
 
-  :dependencies [[org.clojure/clojure "1.9.0-alpha14"]
+  :dependencies [[org.clojure/clojure "1.9.0-alpha15"]
                  [org.clojure/clojurescript "1.9.495"]
                  [binaryage/devtools "0.9.2"]
-                 [binaryage/dirac "1.2.1"]
+                 [binaryage/dirac "1.2.3"]
                  [figwheel "0.5.9"]]
 
   :plugins [[lein-cljsbuild "1.1.5"]
@@ -38,13 +38,13 @@
              {:dependencies ^:replace [[org.clojure/clojure "1.7.0" :upgrade false]
                                        [org.clojure/clojurescript "1.7.228" :upgrade false]
                                        [binaryage/devtools "0.9.2"]
-                                       [binaryage/dirac "1.2.1"]]}
+                                       [binaryage/dirac "1.2.3"]]}
 
              :clojure18
              {:dependencies ^:replace [[org.clojure/clojure "1.8.0" :upgrade false]
                                        [org.clojure/clojurescript "1.9.456" :upgrade false]
                                        [binaryage/devtools "0.9.2"]
-                                       [binaryage/dirac "1.2.1"]]}
+                                       [binaryage/dirac "1.2.3"]]}
 
              :clojure19
              {:dependencies []}
