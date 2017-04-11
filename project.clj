@@ -5,13 +5,13 @@
   :dependencies [[org.clojure/clojure "1.9.0-alpha15"]
                  [org.clojure/clojurescript "1.9.495"]
                  [binaryage/devtools "0.9.2"]
-                 [binaryage/dirac "1.2.3"]
-                 [figwheel "0.5.9"]]
+                 [binaryage/dirac "1.2.4"]
+                 [figwheel "0.5.10"]]
 
   :plugins [[lein-cljsbuild "1.1.5"]
             [lein-shell "0.5.0"]
             [lein-cooper "1.2.2"]
-            [lein-figwheel "0.5.9"]]
+            [lein-figwheel "0.5.10"]]
 
   ; =========================================================================================================================
 
@@ -38,13 +38,13 @@
              {:dependencies ^:replace [[org.clojure/clojure "1.7.0" :upgrade false]
                                        [org.clojure/clojurescript "1.7.228" :upgrade false]
                                        [binaryage/devtools "0.9.2"]
-                                       [binaryage/dirac "1.2.3"]]}
+                                       [binaryage/dirac "1.2.4"]]}
 
              :clojure18
              {:dependencies ^:replace [[org.clojure/clojure "1.8.0" :upgrade false]
                                        [org.clojure/clojurescript "1.9.456" :upgrade false]
                                        [binaryage/devtools "0.9.2"]
-                                       [binaryage/dirac "1.2.3"]]}
+                                       [binaryage/dirac "1.2.4"]]}
 
              :clojure19
              {:dependencies []}
@@ -166,7 +166,7 @@
              :figwheel-nrepl
              [:figwheel-config
               ; following https://github.com/bhauman/lein-figwheel/wiki/Using-the-Figwheel-REPL-within-NRepl
-              {:dependencies [[figwheel-sidecar "0.5.9"]]
+              {:dependencies [[figwheel-sidecar "0.5.10"]]
                :repl-options {:init ^:replace (do
                                                 (require 'dirac.agent)
                                                 (use 'figwheel-sidecar.repl-api)
