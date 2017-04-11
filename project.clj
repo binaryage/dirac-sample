@@ -4,6 +4,7 @@
 
   :dependencies [[org.clojure/clojure "1.9.0-alpha15"]
                  [org.clojure/clojurescript "1.9.495"]
+                 [org.clojure/tools.nrepl "0.2.13"]
                  [binaryage/devtools "0.9.2"]
                  [binaryage/dirac "1.2.4"]
                  [figwheel "0.5.10"]]
