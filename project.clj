@@ -1,18 +1,21 @@
+(def devtools-version "0.9.3")
+(def dirac-version "1.2.4")
+(def figwheel-version "0.5.10")
 (defproject binaryage/dirac-sample "0.1.0-SNAPSHOT"
   :description "An example integration of Dirac DevTools"
   :url "https://github.com/binaryage/dirac-sample"
 
   :dependencies [[org.clojure/clojure "1.9.0-alpha15"]
-                 [org.clojure/clojurescript "1.9.495"]
+                 [org.clojure/clojurescript "1.9.518"]
                  [org.clojure/tools.nrepl "0.2.13"]
-                 [binaryage/devtools "0.9.2"]
-                 [binaryage/dirac "1.2.4"]
-                 [figwheel "0.5.10"]]
+                 [binaryage/devtools ~devtools-version]
+                 [binaryage/dirac ~dirac-version]
+                 [figwheel ~figwheel-version]]
 
   :plugins [[lein-cljsbuild "1.1.5"]
             [lein-shell "0.5.0"]
             [lein-cooper "1.2.2"]
-            [lein-figwheel "0.5.10"]]
+            [lein-figwheel ~figwheel-version]]
 
   ; =========================================================================================================================
 
@@ -38,14 +41,14 @@
              :clojure17
              {:dependencies ^:replace [[org.clojure/clojure "1.7.0" :upgrade false]
                                        [org.clojure/clojurescript "1.7.228" :upgrade false]
-                                       [binaryage/devtools "0.9.2"]
-                                       [binaryage/dirac "1.2.4"]]}
+                                       [binaryage/devtools ~devtools-version]
+                                       [binaryage/dirac ~dirac-version]]}
 
              :clojure18
              {:dependencies ^:replace [[org.clojure/clojure "1.8.0" :upgrade false]
                                        [org.clojure/clojurescript "1.9.456" :upgrade false]
-                                       [binaryage/devtools "0.9.2"]
-                                       [binaryage/dirac "1.2.4"]]}
+                                       [binaryage/devtools ~devtools-version]
+                                       [binaryage/dirac ~dirac-version]]}
 
              :clojure19
              {:dependencies []}
