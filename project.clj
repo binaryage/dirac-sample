@@ -1,12 +1,12 @@
 (def devtools-version "0.9.4")
-(def dirac-version "1.2.10")
-(def figwheel-version "0.5.10")
+(def dirac-version "1.2.13")
+(def figwheel-version "0.5.11")
 (defproject binaryage/dirac-sample "0.1.0-SNAPSHOT"
   :description "An example integration of Dirac DevTools"
   :url "https://github.com/binaryage/dirac-sample"
 
   :dependencies [[org.clojure/clojure "1.9.0-alpha17"]
-                 [org.clojure/clojurescript "1.9.562"]
+                 [org.clojure/clojurescript "1.9.671"]
                  [org.clojure/tools.nrepl "0.2.13"]
                  [binaryage/devtools ~devtools-version]
                  [binaryage/dirac ~dirac-version]
@@ -46,7 +46,7 @@
 
              :clojure18
              {:dependencies ^:replace [[org.clojure/clojure "1.8.0" :upgrade false]
-                                       [org.clojure/clojurescript "1.9.562" :upgrade false]
+                                       [org.clojure/clojurescript "1.9.671" :upgrade false]
                                        [binaryage/devtools ~devtools-version]
                                        [binaryage/dirac ~dirac-version]]}
 
@@ -170,7 +170,7 @@
              :figwheel-nrepl
              [:figwheel-config
               ; following https://github.com/bhauman/lein-figwheel/wiki/Using-the-Figwheel-REPL-within-NRepl
-              {:dependencies [[figwheel-sidecar "0.5.10"]]
+              {:dependencies [[figwheel-sidecar ~figwheel-version]]
                :repl-options {:init ^:replace (do
                                                 (require 'dirac.agent)
                                                 (use 'figwheel-sidecar.repl-api)
