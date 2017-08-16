@@ -1,12 +1,12 @@
 (def devtools-version "0.9.4")
-(def dirac-version "1.2.14")
-(def figwheel-version "0.5.11")
+(def dirac-version "1.2.15")
+(def figwheel-version "0.5.13")
 (defproject binaryage/dirac-sample "0.1.0-SNAPSHOT"
   :description "An example integration of Dirac DevTools"
   :url "https://github.com/binaryage/dirac-sample"
 
   :dependencies [[org.clojure/clojure "1.9.0-alpha17"]
-                 [org.clojure/clojurescript "1.9.671"]
+                 [org.clojure/clojurescript "1.9.908"]
                  [org.clojure/tools.nrepl "0.2.13"]
                  [binaryage/devtools ~devtools-version]
                  [binaryage/dirac ~dirac-version]
@@ -46,7 +46,7 @@
 
              :clojure18
              {:dependencies ^:replace [[org.clojure/clojure "1.8.0" :upgrade false]
-                                       [org.clojure/clojurescript "1.9.671" :upgrade false]
+                                       [org.clojure/clojurescript "1.9.908" :upgrade false]
                                        [binaryage/devtools ~devtools-version]
                                        [binaryage/dirac ~dirac-version]]}
 
@@ -116,7 +116,7 @@
 
              ; --------------------------------------------------------------------------------------------------------------
              :cider
-             {:dependencies [[cider/cider-nrepl "0.14.0"]]
+             {:dependencies [[cider/cider-nrepl "0.15.0"]]
               :repl-options {:nrepl-middleware [cider.nrepl.middleware.apropos/wrap-apropos
                                                 cider.nrepl.middleware.classpath/wrap-classpath
                                                 cider.nrepl.middleware.complete/wrap-complete
