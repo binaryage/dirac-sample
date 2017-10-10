@@ -1,5 +1,5 @@
 (def devtools-version "0.9.4")
-(def dirac-version "1.2.16")
+(def dirac-version "1.2.17")
 (def figwheel-version "0.5.14")
 (defproject binaryage/dirac-sample "0.1.0-SNAPSHOT"
   :description "An example integration of Dirac DevTools"
@@ -116,7 +116,7 @@
 
              ; --------------------------------------------------------------------------------------------------------------
              :cider
-             {:dependencies [[cider/cider-nrepl "0.15.0"]]
+             {:dependencies [[cider/cider-nrepl "0.15.1"]]
               :repl-options {:nrepl-middleware [cider.nrepl.middleware.apropos/wrap-apropos
                                                 cider.nrepl.middleware.classpath/wrap-classpath
                                                 cider.nrepl.middleware.complete/wrap-complete
