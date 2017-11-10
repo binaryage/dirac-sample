@@ -1,11 +1,11 @@
-(def devtools-version "0.9.4")
-(def dirac-version "1.2.18")
+(def devtools-version "0.9.7")
+(def dirac-version "1.2.20")
 (def figwheel-version "0.5.14")
 (defproject binaryage/dirac-sample "0.1.0-SNAPSHOT"
   :description "An example integration of Dirac DevTools"
   :url "https://github.com/binaryage/dirac-sample"
 
-  :dependencies [[org.clojure/clojure "1.9.0-beta2"]
+  :dependencies [[org.clojure/clojure "1.9.0-RC1"]
                  [org.clojure/clojurescript "1.9.946"]
                  [org.clojure/tools.nrepl "0.2.13"]
                  [binaryage/devtools ~devtools-version]
