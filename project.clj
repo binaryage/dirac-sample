@@ -1,5 +1,5 @@
-(def devtools-version "0.9.8")
-(def dirac-version "1.2.24")
+(def devtools-version "0.9.9")
+(def dirac-version "1.2.26")
 (def figwheel-version "0.5.14")
 (defproject binaryage/dirac-sample "0.1.0-SNAPSHOT"
   :description "An example integration of Dirac DevTools"
@@ -12,7 +12,7 @@
                  [binaryage/dirac ~dirac-version]
                  [figwheel ~figwheel-version]]
 
-  :plugins [[lein-cljsbuild "1.1.6"]
+  :plugins [[lein-cljsbuild "1.1.7"]
             [lein-shell "0.5.0"]
             [lein-cooper "1.2.2"]
             [lein-figwheel ~figwheel-version]]
