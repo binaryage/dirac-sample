@@ -1,5 +1,5 @@
 (def devtools-version "0.9.10")
-(def dirac-version "1.2.42")
+(def dirac-version "1.2.43")
 (def figwheel-version "0.5.17")
 (defproject binaryage/dirac-sample "0.1.0-SNAPSHOT"
   :description "An example integration of Dirac DevTools"
