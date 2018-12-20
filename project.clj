@@ -1,13 +1,14 @@
 (def devtools-version "0.9.10")
-(def dirac-version "1.2.43")
-(def figwheel-version "0.5.17")
+(def dirac-version "1.3.0")
+(def figwheel-version "0.5.18")
 (defproject binaryage/dirac-sample "0.1.0-SNAPSHOT"
   :description "An example integration of Dirac DevTools"
   :url "https://github.com/binaryage/dirac-sample"
 
-  :dependencies [[org.clojure/clojure "1.9.0"]
-                 [org.clojure/clojurescript "1.10.339"]
-                 [org.clojure/tools.nrepl "0.2.13"]
+  :dependencies [[org.clojure/clojure "1.10.0"]
+                 [org.clojure/clojurescript "1.10.439"]
+                 [nrepl/nrepl "0.5.3"]
+                 [clojure-complete "0.2.5" :exclusions [org.clojure/clojure]]
                  [binaryage/devtools ~devtools-version]
                  [binaryage/dirac ~dirac-version]
                  [figwheel ~figwheel-version]]
@@ -51,7 +52,16 @@
                                        [binaryage/dirac ~dirac-version]]}
 
              :clojure19
+             {:dependencies ^:replace [[org.clojure/clojure "1.9.0" :upgrade false]
+                                       [org.clojure/clojurescript "1.10.339" :upgrade false]
+                                       [binaryage/devtools ~devtools-version]
+                                       [binaryage/dirac ~dirac-version]]}
+
+             :clojure110
              {:dependencies []}
+
+             :clojure-current
+             [:clojure110]
 
              ; --------------------------------------------------------------------------------------------------------------
              :demo
@@ -236,8 +246,12 @@
 
   ; =========================================================================================================================
 
-  :aliases {"demo"                     "demo19"
+  :aliases {"demo"                     "demo110"
 
+            "demo110"                  ["with-profile" "+demo,+clojure110" "do"
+                                        ["clean"]
+                                        ["cljsbuild" "once"]
+                                        ["shell" "scripts/dev-server.sh"]]
             "demo19"                   ["with-profile" "+demo,+clojure19" "do"
                                         ["clean"]
                                         ["cljsbuild" "once"]
@@ -254,7 +268,11 @@
                                         ["cljsbuild" "once"]
                                         ["shell" "scripts/dev-server.sh"]]
 
-            "demo-node"                "demo-node19"
+            "demo-node"                "demo-node110"
+            "demo-node110"             ["with-profile" "+demo-node,+clojure110" "do"
+                                        ["clean"]
+                                        ["cljsbuild" "once"]
+                                        ["shell" "scripts/run-node-demo.sh"]]
             "demo-node19"              ["with-profile" "+demo-node,+clojure19" "do"
                                         ["clean"]
                                         ["cljsbuild" "once"]
@@ -267,21 +285,22 @@
                                         ["clean"]
                                         ["cljsbuild" "once"]
                                         ["shell" "scripts/run-node-demo.sh"]]
-            "demo-node-dev"            ["with-profile" "+demo-node,+clojure19,+checkouts" "do"
+            "demo-node-dev"            ["with-profile" "+demo-node,+clojure-current,+checkouts" "do"
                                         ["cljsbuild" "once" "demo"]
                                         ["shell" "scripts/run-node-demo.sh"]]
-            "demo-node-dev-inlined-sm" ["with-profile" "+demo-node,+demo-node-inline-sm,+clojure19,+checkouts" "do"
+            "demo-node-dev-inlined-sm" ["with-profile" "+demo-node,+demo-node-inline-sm,+clojure-current,+checkouts" "do"
                                         ["cljsbuild" "once" "demo"]
                                         ["shell" "scripts/run-node-demo.sh" "1"]]
 
             "repl17"                   ["with-profile" "+repl,+clojure17" "repl"]
             "repl18"                   ["with-profile" "+repl,+clojure18" "repl"]
             "repl19"                   ["with-profile" "+repl,+clojure19" "repl"]
-            "repl-dev"                 ["with-profile" "+repl,+clojure19,+checkouts,+dirac-logging,+debugger-5005" "repl"]
-            "repl-cider"               ["with-profile" "+repl,+clojure19,+cider" "repl"]
-            "repl-figwheel"            ["with-profile" "+repl,+clojure19,+checkouts,+figwheel-nrepl" "repl"]
+            "repl110"                  ["with-profile" "+repl,+clojure110" "repl"]
+            "repl-dev"                 ["with-profile" "+repl,+clojure-current,+checkouts,+dirac-logging,+debugger-5005" "repl"]
+            "repl-cider"               ["with-profile" "+repl,+clojure-current,+cider" "repl"]
+            "repl-figwheel"            ["with-profile" "+repl,+clojure-current,+checkouts,+figwheel-nrepl" "repl"]
 
-            "fig-repl"                 ["with-profile" "+repl,+clojure19,+figwheel-config,+figwheel-repl" "figwheel"]
+            "fig-repl"                 ["with-profile" "+repl,+clojure-current,+figwheel-config,+figwheel-repl" "figwheel"]
             "auto-compile-tests"       ["with-profile" "+tests,+checkouts" "cljsbuild" "auto"]
             "auto-compile-demo"        ["with-profile" "+demo,+checkouts" "cljsbuild" "auto"]
             "dev-fig"                  ["with-profile" "+demo,+tests,+checkouts,+figwheel-config" "figwheel" "demo" "tests"]

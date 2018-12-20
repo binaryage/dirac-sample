@@ -8,7 +8,7 @@ ROOT=`pwd`
 DEVSERVER_ROOT="$ROOT/resources/public"
 DEVSERVER_PORT=9977
 
-pushd "$DEVSERVER_ROOT" > /dev/null
+cd "$DEVSERVER_ROOT"
 
 set +e
 PYTHON_PATH=`which python`
@@ -20,7 +20,14 @@ else
   echo "Starting HTTP server on port $DEVSERVER_PORT => http://localhost:$DEVSERVER_PORT"
 fi
 
-python -m SimpleHTTPServer "$DEVSERVER_PORT" 2> /dev/null \
-  || echo "Error: failed to start 'python -m SimpleHTTPServer ...', do you have python properly installed? isn't the port $DEVSERVER_PORT already used?"
+# taken from https://stackoverflow.com/a/52967771/84283
+VERSION=$(python -V 2>&1 | cut -d\  -f 2) # python 2 prints version to stderr
+VERSION=(${VERSION//./ }) # make an version parts array
+if [[ ${VERSION[0]} -lt 3 ]]; then
+    LAUNCH_SERVER_CMD="python -m SimpleHTTPServer"
+else
+    LAUNCH_SERVER_CMD="python -m http.server"
+fi
 
-popd
+${LAUNCH_SERVER_CMD} "$DEVSERVER_PORT" 2> /dev/null \
+  || echo "Error: failed to start '${LAUNCH_SERVER_CMD} ...', do you have python properly installed? isn't the port $DEVSERVER_PORT already used?"
