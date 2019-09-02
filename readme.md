@@ -1,3 +1,13 @@
+# This project is deprecated since Dirac v1.4.0
+
+Please use Dirac integration examples in
+
+[https://github.com/binaryage/dirac/tree/master/examples](https://github.com/binaryage/dirac/tree/master/examples)
+
+---
+---
+---
+
 # dirac-sample [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](license.txt)
 
 This project is an example of integration of [**Dirac DevTools**](https://github.com/binaryage/dirac) into a
